@@ -36,7 +36,9 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    <link href="./output.css" rel="stylesheet">
+    {{-- <link href="./output.css" rel="stylesheet"> --}}
+    <script src="https://cdn.tailwindcss.com"></script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
