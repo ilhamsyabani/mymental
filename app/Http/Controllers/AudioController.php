@@ -28,7 +28,23 @@ class AudioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $data = $request->validate([
+            'title' => 'required',
+            'cover' => 'required',
+            'content' => 'required',
+            'autor' => 'required',
+        ]);
+
+        // Proses penyimpanan artikel
+        $audio = new Audio();
+        $audio->title = $data['title'];
+        $audio->cover = $data['cover'];
+        $audio->content = $data['content'];
+        $audio->autor = $data['autor'];
+        $audio->save();
+
+        return redirect()->route('adios-index')->with('status', 'New Audio add!');
     }
 
     /**

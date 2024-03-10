@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\AudioController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PostController;
+use App\Livewire\PostIndex;
 use App\Models\Audio;
 use App\Models\Doctor;
 use App\Models\Order;
@@ -13,9 +17,14 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
+use function Livewire\store;
 
+Route::get('/', function () {
+    return view('landingpage');
+});
 
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
@@ -57,9 +66,9 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-Route::get('/',function(){
-   return redirect('dashboard');
-});
+// Route::get('/',function(){
+//    return redirect('dashboard');
+// });
 
 Route::get('/invoice/{id}', [OrderController::class, 'invoice'])->name('invoice');
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
@@ -102,5 +111,45 @@ Route::get('/article/{id}', function($id){
 })->middleware(['auth', 'verified'])
 ->name('article.show');
 
+Route::get('posts', function(){
+    $artikels = Post::all();
+    return view('livewire.pages.posts.index', compact(('artikels')));
+})->middleware(['auth'])->name('posts-index');
 
+Route::get('posts/create', function () {
+    $user = Auth::user();
+    return view('livewire.pages.posts.create', compact('user'));
+})->middleware(['auth'])->name('posts-create');
+
+Route::post('posts/store', [PostController::class, 'store'])->name('post-store');
+Route::get('posts/{post}/edit', [PostController::class, 'edit'])->middleware(['auth'])->name('post-edit');
+Route::put('posts/{post}', [PostController::class, 'update'])->middleware(['auth'])->name('post-update');
+
+Route::get('audio', function(){
+    $audios = Audio::all();
+    return view('livewire.pages.audio.index', compact(('audios')));
+})->middleware(['auth'])->name('adios-index');
+
+Route::get('audio/create', function () {
+    $user = Auth::user();
+    return view('livewire.pages.audio.create', compact('user'));
+})->middleware(['auth'])->name('audio-create');
+
+Route::post('audio/store', [AudioController::class, 'store'])->name('audio-store');
+
+
+
+Route::get('doctors/index', function(){
+    $doctors = Doctor::all();
+    return view('livewire.pages.doctor.index', compact(('doctors')));
+})->middleware(['auth'])->name('doctors-index');
+
+Route::get('doctors/create', function () {
+    $user = Auth::user();
+    return view('livewire.pages.doctor.create', compact('user'));
+})->middleware(['auth'])->name('doctor-create');
+
+Route::post('doctors/store', [DoctorController::class, 'store'])->name('doctor-store');
+Route::get('doctors/{doctor}/edit', [DoctorController::class, 'edit'])->name('doctor-edit');
+Route::put('doctors/{doctor}', [DoctorController::class, 'update'])->name('doctor-update');
 require __DIR__.'/auth.php';

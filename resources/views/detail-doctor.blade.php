@@ -10,7 +10,7 @@
         <div class="flex flex-col m-auto p-auto">
             <div class="mb-4 p-4">
                 <div class='mb-4'>
-                    <img class="w-full h-[200px] object-cover object-top" src="{{ asset($doctor->photo) }}" />
+                    <img class="w-full h-[200px] object-cover object-top" src="{{ asset($doctor->cover) }}" />
                 </div>
                 <div class="px-4 mb-4 rounded-md">
                     <h4 class="text-xl font-semibold text-gray-800 pl-2 group-hover:text-gray-200">{{$doctor->name}}</h4>
@@ -88,7 +88,7 @@
                     <form action="/checkout" method="POST">
                         @csrf
                         <input type="hidden" name="doctor_id" value="{{$doctor->id}}">
-                        <input type="hidden" name="price" value="60000">
+                        <input type="hidden" name="price" value={{ $doctor->harga}}>
                         <h4 class="text-xl font-semibold text-gray-800 pl-2 mt-4 mb-2 group-hover:text-gray-200">Pilih
                             tanggal
                             konseling</h4>
