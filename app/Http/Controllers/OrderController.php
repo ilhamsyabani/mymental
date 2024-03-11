@@ -77,7 +77,8 @@ class OrderController extends Controller
         $hashed = hash("sha512", $request->order_id.$request->status_code.$request->gross_amount.$serverKey);
         if($hashed == $request->signature_key){
             if($request->transaction_status == 'capture'){
-                $order = Order::find($request->oreder_id);
+                $order = Order::where('kode', $request->oreder_id);
+                dd($order);
                 $order->update(['status' => 'Paid']);
             }
         }
