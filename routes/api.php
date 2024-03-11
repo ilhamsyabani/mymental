@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/payment-callback', [OrderController::class, 'callback']);
+// Route::post('/payment-callback', [OrderController::class, 'callback']);

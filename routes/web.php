@@ -72,6 +72,7 @@ Route::get('/google/callback', function () {
 
 Route::get('/invoice/{id}', [OrderController::class, 'invoice'])->name('invoice');
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+Route::post('/payment-callback', [OrderController::class, 'callback']);
 
 
 Route::get('/dashboard', function(){
