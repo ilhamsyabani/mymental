@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -31,4 +32,5 @@ Route::middleware('auth')->group(function () {
 
     // Volt::route('storepost','page.post.create')
     //     ->name('storepost');
+    Route::post('/payment-callback', [OrderController::class, 'callback']);
 });
