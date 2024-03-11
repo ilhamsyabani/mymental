@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,4 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-// Route::middleware('auth:sanctum')->post('/payment-callback', [OrderController::class, 'callback']);
+
+Route::post('midtras-callback', [OrderController::class, 'store']);
+Route::post('doctors/store', [DoctorController::class, 'store'])->name('doctor-store');
