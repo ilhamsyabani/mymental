@@ -198,8 +198,8 @@
                         src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Sunset in the mountains">
                     <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2">5 tips menjaga kesehatan mental</div>
-                        <p class="text-gray-700 text-base">
+                        <div class="font-bold text-xl mb-2 dark:text-white">5 tips menjaga kesehatan mental</div>
+                        <p class="text-gray-700 text-base dark:text-white">
                             Kesejahteraan tidak hanya tergantung pada kesehatan fisik,...
                         </p>
                     </div>
@@ -210,8 +210,8 @@
                         src="https://images.unsplash.com/photo-1509475826633-fed577a2c71b?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Sunset in the mountains">
                     <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2">Memahami Perbedaan Antara Psikolog dan Psikiater</div>
-                        <p class="text-gray-700 text-base">Psikolog dan psikiater, dua profesi dalam...
+                        <div class="font-bold text-xl mb-2 dark:text-white">Memahami Perbedaan Antara Psikolog dan Psikiater</div>
+                        <p class="text-gray-700 text-base dark:text-white">Psikolog dan psikiater, dua profesi dalam...
                         </p>
                     </div>
                 </div>
@@ -221,8 +221,8 @@
                         src="https://images.unsplash.com/photo-1454942901704-3c44c11b2ad1?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Sunset in the mountains">
                     <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2">Santai Kesehatan Mental</div>
-                        <p class="text-gray-700 text-base">
+                        <div class="font-bold text-xl mb-2 dark:text-white">Santai Kesehatan Mental</div>
+                        <p class="text-gray-700 text-base dark:text-white">
                             Siapa bilang kesehatan cuma seputar badan? Kesehatan mental...
                         </p>
                     </div>
@@ -233,8 +233,8 @@
                         src="https://images.unsplash.com/photo-1424878825877-7083ba5de185?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Sunset in the mountains">
                     <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2">Melacak Jejak Sejarah Isu Kesehatan Mental</div>
-                        <p class="text-gray-700 text-base">
+                        <div class="font-bold text-xl mb-2 dark:text-white">Melacak Jejak Sejarah Isu Kesehatan Mental</div>
+                        <p class="text-gray-700 text-base dark:text-white" >
                             Isu kesehatan mental telah menjalani perjalanan yang panjang...
                         </p>
                     </div>
