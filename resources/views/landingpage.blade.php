@@ -254,7 +254,7 @@
                 <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Aktivitas mymental team untuk
                     menjaga kesehatan mental remaja indonesia</p>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
                 <div class="grid gap-4">
                     <div>
                         <img class="h-auto max-w-full rounded-lg"
@@ -283,7 +283,7 @@
                             src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-5.jpg" alt="">
                     </div>
                 </div>
-                <div class="grid gap-4">
+                {{-- <div class="grid gap-4">
                     <div>
                         <img class="h-auto max-w-full rounded-lg"
                             src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-6.jpg" alt="">
@@ -296,8 +296,8 @@
                         <img class="h-auto max-w-full rounded-lg"
                             src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-8.jpg" alt="">
                     </div>
-                </div>
-                <div class="grid gap-4">
+                </div> --}}
+                {{-- <div class="grid gap-4">
                     <div>
                         <img class="h-auto max-w-full rounded-lg"
                             src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-9.jpg" alt="">
@@ -310,7 +310,7 @@
                         <img class="h-auto max-w-full rounded-lg"
                             src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-11.jpg" alt="">
                     </div>
-                </div>
+                </div> --}}
             </div>
 
         </div>
@@ -320,7 +320,7 @@
     <section class="bg-white dark:bg-gray-900" id="team">
         <div class="max-w-screen-xl px-4 py-8 mx-auto lg:py-24 lg:px-6">
             <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
-                <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Mmental teams
+                <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Mymental teams
                     like yours</h2>
                 <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Orang-orang keren yang peduli
                     dengan kesehatan mentalmu.</p>

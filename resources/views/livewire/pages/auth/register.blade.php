@@ -50,15 +50,15 @@ new #[Layout('layouts.guest')] class extends Component
 
             <div>
                 <label class="block text-gray-700">Email Address</label>
-                <input wire:model="form.email" id="email" type="email" name="email" required autofocus
-                    autocomplete="username"class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                <input wire:model="email" id="email" type="email" name="email" required autofocus
+                    autocomplete="email"class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
                     autofocus autocomplete required>
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
             <div class="mt-4">
                 <label class="block text-gray-700">Password</label>
-                <input wire:model="form.password" id="password" type="password" name="password" required
+                <input wire:model="password" id="password" type="password" name="password" required
                     autocomplete="current-password"
                     class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                 focus:bg-white focus:outline-none"
@@ -68,8 +68,8 @@ new #[Layout('layouts.guest')] class extends Component
 
             <div class="mt-4">
                 <label class="block text-gray-700">Password Confirm</label>
-                <input wire:model="password_confirmation" id="password_confirmation" 
-                name="password_confirmation" required autocomplete="new-password"
+                <input wire:model="password_confirmation" id="password_confirmation" type="password" 
+                name="password_confirmation" required autocomplete="password_confirmation"
                     class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
                 focus:bg-white focus:outline-none">
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
@@ -104,7 +104,7 @@ new #[Layout('layouts.guest')] class extends Component
         </a>
         <div class="flex align-middle text-center justify-center mt-12 ">
         <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}" wire:navigate>
-            {{ __('Already registered?') }}
+            {{ __('Sudah terdaftar ?') }}
         </a>
     </div>  
     </div>
