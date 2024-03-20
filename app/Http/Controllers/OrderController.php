@@ -38,7 +38,7 @@ class OrderController extends Controller
         ]);
         $request->request->add([
             'status' => 'Unpaid',
-            'user_id'=>Auth::user()->index,
+            'user_id'=>Auth::user()->id,
             'name' => Auth::user()->name,
             'email' => Auth::user()->email,
             
