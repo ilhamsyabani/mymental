@@ -74,6 +74,15 @@
                             <table class="mt-2">
                                 <tr>
                                     <td>
+                                        <p class="text-zinc-600 py-2 text-sm font-normal leading-none">Kode Tansaksi </p>
+                                    </td>
+                                    <td>
+                                        <p class="text-zinc-600 py-2 px-4 text-sm font-normal leading-none">: {{ $transaction->kode }}
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         <p class="text-zinc-600 py-2 text-sm font-normal leading-none">Nama Dokter </p>
                                     </td>
                                     <td>
