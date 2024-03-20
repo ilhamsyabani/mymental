@@ -19,7 +19,6 @@ class OrderController extends Controller
      */
     public function index()
     {
-       
     }
 
     /**
@@ -38,14 +37,26 @@ class OrderController extends Controller
         ]);
         $request->request->add([
             'status' => 'Unpaid',
-            'user_id'=>Auth::user()->id,
+            'user_id' => Auth::user()->id,
             'name' => Auth::user()->name,
             'email' => Auth::user()->email,
-            
+
         ]);
 
         $order = Order::create($request->all());
-        $order->kode = 'MY/' . date('M') . '/' . $order->id;
+        // Mendapatkan bulan, tanggal, dan tahun saat ini
+        $bulan = date('m'); // Format dua digit untuk bulan (01 - 12)
+        $tanggal = date('d'); // Format dua digit untuk tanggal (01 - 31)
+        $tahun = date('Y'); // Format empat digit untuk tahun (misalnya, 2024)
+
+        // Mendapatkan tiga kode unik tambahan secara acak
+        $unik1 = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 2); // Dua karakter acak dari alfabet
+        $unik2 = substr(str_shuffle('0123456789'), 0, 2); // Dua angka acak
+        $unik3 = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 2); // Dua karakter acak dari alfabet dan angka
+
+        // Membuat kode unik untuk pesanan dengan format 'MY/[bulan][tanggal][tahun]/[3 kode unik tambahan]'
+        $kode = 'MY/' . $bulan . $tanggal . $tahun . '/' . $unik1 . $unik2 . $unik3 . '/' . $order->id;
+        $order->kode = $kode;
         $order->save();
 
         // Set your Merchant Server Key
@@ -68,23 +79,25 @@ class OrderController extends Controller
             ),
         );
 
-    
+
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         return view('checkout', compact('snapToken', 'order'));
     }
 
-    public function callback(Request $request){
+    public function callback(Request $request)
+    {
         $serverKey = config('midtrans.server_key');
-        $hashed = hash("sha512", $request->order_id.$request->status_code.$request->gross_amount.$serverKey);
-        if($hashed == $request->signature_key){
-            if($request->transaction_status == 'capture'){
+        $hashed = hash("sha512", $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
+        if ($hashed == $request->signature_key) {
+            if ($request->transaction_status == 'capture') {
                 $order = Order::where('kode', $request->order_id)->first();
                 $order->update(['status' => 'Paid']);
             }
         }
     }
 
-    public function invoice($id){
+    public function invoice($id)
+    {
         $order = Order::find($id);
         return view('invoice', compact('order'));
     }
@@ -130,7 +143,7 @@ class OrderController extends Controller
             // 'doctor_id' => 'required',
             'zoom_link' => 'required',
         ]);
-    
+
         // Update the post with the new data
         // $order->kode = $data['kode'];
         // $order->name = $data['name'];
@@ -139,11 +152,11 @@ class OrderController extends Controller
         // $order->time_book = $data['time_book'];
         // $order->doctor_id = $data['doctor_id'];
         $order->zoom_link = $data['zoom_link'];
-      
-    
+
+
         // Save the updated or$order to the database
         $order->save();
-    
+
         // Redirect back to the post index page with a success message
         return redirect()->route('orders-index')->with('status', 'Post updated successfully!');
     }
