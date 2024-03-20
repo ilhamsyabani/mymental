@@ -19,7 +19,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+       
     }
 
     /**
@@ -38,6 +38,7 @@ class OrderController extends Controller
         ]);
         $request->request->add([
             'status' => 'Unpaid',
+            'user_id'=>Auth::user()->index,
             'name' => Auth::user()->name,
             'email' => Auth::user()->email,
             
@@ -109,7 +110,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        return view('livewire.pages.orders.edit', compact('order'));
     }
 
 
@@ -118,7 +119,33 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+
+        // Validate the incoming request data
+        $data = $request->validate([
+            // 'kode' => 'required',
+            // 'name' => 'required',
+            // 'email' => 'required',
+            // 'date_book' => 'required|date',
+            // 'time_book' => 'required',
+            // 'doctor_id' => 'required',
+            'zoom_link' => 'required',
+        ]);
+    
+        // Update the post with the new data
+        // $order->kode = $data['kode'];
+        // $order->name = $data['name'];
+        // $order->email = $data['email'];
+        // $order->date_book = $data['date_book'];
+        // $order->time_book = $data['time_book'];
+        // $order->doctor_id = $data['doctor_id'];
+        $order->zoom_link = $data['zoom_link'];
+      
+    
+        // Save the updated or$order to the database
+        $order->save();
+    
+        // Redirect back to the post index page with a success message
+        return redirect()->route('orders-index')->with('status', 'Post updated successfully!');
     }
 
     /**

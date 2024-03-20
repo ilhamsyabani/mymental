@@ -61,6 +61,9 @@ new class extends Component {
                         </x-dropdown-link>
 
                         @if (auth()->user()->email === 'admin.mental@mymental.id')
+                        <x-dropdown-link :href="route('orders-index')" wire:navigate>
+                            {{ __('Orders') }}
+                        </x-dropdown-link>
                         <x-dropdown-link :href="route('posts-index')" wire:navigate>
                             {{ __('Article') }}
                         </x-dropdown-link>
@@ -73,6 +76,7 @@ new class extends Component {
                         <x-dropdown-link :href="route('profile')" wire:navigate>
                             {{ __('Content') }}
                         </x-dropdown-link>
+                      
                         @endif
 
                         <!-- Authentication -->

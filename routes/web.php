@@ -74,14 +74,13 @@ Route::get('/invoice/{id}', [OrderController::class, 'invoice'])->name('invoice'
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 // Route::post('/payment-callback', [OrderController::class, 'callback']);
 
-
 Route::get('/dashboard', function(){
     $posts = Post::all();
     $doctors = Doctor::all();
     $audios = Audio::all();
-    return view('dashboard', compact('posts', 'audios', 'doctors') );
-})
-->middleware(['auth', 'verified'])
+    $order = Order::find(auth()->id());
+    return view('dashboard', compact('posts', 'audios', 'doctors', 'order'));
+})->middleware(['auth', 'verified'])
 ->name('dashboard');
 
 Route::view('profile', 'profile')
@@ -153,4 +152,21 @@ Route::get('doctors/create', function () {
 Route::post('doctors/store', [DoctorController::class, 'store'])->name('doctor-store');
 Route::get('doctors/{doctor}/edit', [DoctorController::class, 'edit'])->name('doctor-edit');
 Route::put('doctors/{doctor}', [DoctorController::class, 'update'])->name('doctor-update');
+
+
+Route::get('orders/index', function(){
+    $orders = Order::all();
+    return view('livewire.pages.orders.index', compact(('orders')));
+})->middleware(['auth'])->name('orders-index');
+Route::get('orders/{order}/edit', [OrderController::class, 'edit'])->name('order-edit');
+Route::put('orders/{order}', [OrderController::class, 'update'])->name('order-update');
+
+Route::get('transactions/index', function(){
+    $transactions = Order::where('user_id', auth()->id())->get();
+    return view('livewire.pages.transaction.index', compact('transactions')); 
+})->middleware(['auth'])->name('transactions-index');
+Route::get('transactions/show/{id}', function($id){
+    $transaction = Order::findOrFail($id);
+    return view('livewire.pages.transaction.show', compact('transaction'));
+})->middleware(['auth'])->name('transaction-show');
 require __DIR__.'/auth.php';
