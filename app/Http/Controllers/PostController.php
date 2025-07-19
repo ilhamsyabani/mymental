@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\POST;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -50,7 +51,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(POST $pOST)
+    public function show(Post $pOST)
     {
         //
     }
@@ -58,7 +59,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(POST $post)
+    public function edit(Post $post)
     {
         return view('livewire.pages.posts.edit', compact('post'));
     }
@@ -90,8 +91,14 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(POST $pOST)
+    public function destroy(Post $post)
     {
-        //
+         if ($post->image) {
+            Storage::disk('public')->delete($post->image);
+        }
+
+        $post->delete();
+
+        return redirect()->route('posts-index')->with('status', 'Post deleted successfully!');
     }
 }
