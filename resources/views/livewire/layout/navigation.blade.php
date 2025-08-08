@@ -60,14 +60,14 @@ new class extends Component {
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        @if (auth()->user()->email === 'admin.mental@mymental.id')
+                        @if (auth()->user()->role === 'admin')
                         <x-dropdown-link :href="route('orders-index')" wire:navigate>
                             {{ __('Orders') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('posts-index')" wire:navigate>
                             {{ __('Article') }}
                         </x-dropdown-link>
-                        <x-dropdown-link :href="route('adios-index')" wire:navigate>
+                        <x-dropdown-link :href="route('audios-index')" wire:navigate>
                             {{ __('Audio') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('doctors-index')" wire:navigate>

@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->integer('doctor_id');
-            $table->string('date_book');
-            $table->string('time_book');
-            $table->integer('price');
-            $table->enum('status', ['Unpaid', 'Paid']);
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('doctor_id')->constrained('doctors')->onDelete('cascade');
+            $table->date('appointment_at');
+            $table->time('appointment_time');
+            $table->decimal('price', 10, 2);
+            $table->string('status')->default('unpaid');
+            $table->string('zoom_link')->nullable();
+            $table->string('code')->nullable();
+            $table->string('payment_transaction_id')->nullable()->index();
             $table->timestamps();
         });
     }

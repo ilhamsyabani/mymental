@@ -1,543 +1,291 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id" class="scroll-smooth">
 
 <head>
-    <link rel="canonical" href="https://https://demo.themesberg.com/landwind/" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mymental</title>
-
-    <!-- Meta SEO -->
-    <meta name="title" content="Landwind - Tailwind CSS Landing Page">
-    <meta name="description"
-        content="Get started with a free and open-source landing page built with Tailwind CSS and the Flowbite component library.">
-    <meta name="robots" content="index, follow">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="language" content="English">
-    <meta name="author" content="Themesberg">
-
-    <!-- Social media share -->
-    <meta property="og:title" content=Landwind - Tailwind CSS Landing Page>
-    <meta property="og:site_name" content=Themesberg>
-    <meta property="og:url" content=https://https://demo.themesberg.com/landwind />
-    <meta property="og:description" content=Get started with a free and open-source landing page for Tailwind CSS built
-        with the Flowbite component library featuring dark mode, hero sections, pricing cards, and more.>
-    <meta property="og:type" content="">
-    <meta property="og:image" content=https://themesberg.s3.us-east-2.amazonaws.com/public/github/landwind/og-image.png>
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@themesberg" />
-    <meta name="twitter:creator" content="@themesberg" />
-
-    <!-- Favicon -->
+    
+    <title>Mymental - Layanan Kesehatan Mental Terpercaya</title>
+    <meta name="title" content="Mymental - Layanan Kesehatan Mental Terpercaya">
+    <meta name="description" content="Mymental adalah platform kesehatan mental di Indonesia yang menyediakan layanan konseling, konsultasi, dan edukasi esensial bagi remaja.">
+    <meta name="author" content="Mymental Team">
+    <link rel="canonical" href="https://mymental-app.com/" /> <meta property="og:title" content="Mymental - Layanan Kesehatan Mental Terpercaya">
+    <meta property="og:description" content="Temukan dukungan untuk kesehatan mental Anda bersama Mymental. Kami menyediakan konseling, artikel, dan pendampingan profesional.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mymental-app.com/"> <meta property="og:image" content="https://mymental-app.com/og-image.png"> <meta name="twitter:card" content="summary_large_image">
+    
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-    {{-- <link href="./output.css" rel="stylesheet"> --}}
+    
     <script src="https://cdn.tailwindcss.com"></script>
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+        // Konfigurasi tambahan untuk Tailwind jika diperlukan
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            '50': '#f5f3ff',
+                            '100': '#ede9fe',
+                            '200': '#ddd6fe',
+                            '300': '#c4b5fd',
+                            '400': '#a78bfa',
+                            '500': '#8b5cf6',
+                            '600': '#7c3aed',
+                            '700': '#6d28d9',
+                            '800': '#5b21b6',
+                            '900': '#4c1d95',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 </head>
 
-<body>
-    <header class="fixed w-full">
-        <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
+<body class="bg-white dark:bg-gray-900">
+    <header class="fixed w-full z-50">
+        <nav class="bg-white/80 border-gray-200 py-2.5 dark:bg-gray-900/80 backdrop-blur-sm shadow-sm">
             <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
                 <a href="#" class="flex items-center">
-                    <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                    {{-- <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" class="h-6 mr-3 sm:h-9" alt="Mymental Logo" />
+                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Mymental</span> --}}
+                     <x-application-logo class="block h-24 w-auto fill-current text-gray-800 dark:text-gray-200" />
                 </a>
                 <div class="flex items-center lg:order-2">
-                    <a href="{{ route('login') }}"
-                        class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">login</a>
-                    <button data-collapse-toggle="mobile-menu-2" type="button"
-                        class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        aria-controls="mobile-menu-2" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                clip-rule="evenodd"></path>
-                        </svg>
+                    <a href="{{ route('login') }}" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 transition-colors">Login</a>
+                    <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
+                        <span class="sr-only">Buka menu utama</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
                     </button>
                 </div>
                 <div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
                     <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-                        <li>
-                            <a href="#home"
-                                class="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0 dark:text-white"
-                                aria-current="page">Home</a>
-                        </li>
-                        <li>
-                            <a href="#layanan"
-                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Layanan
-                                Kami</a>
-                        </li>
-                        <li>
-                            <a href="#galeri"
-                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Galeri</a>
-                        </li>
-                        <li>
-                            <a href="#team"
-                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Team</a>
-                        </li>
-                        <li>
-                            <a href="#contact"
-                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
-                        </li>
+                        <li><a href="#home" class="block py-2 pl-3 pr-4 text-gray-700 rounded lg:p-0 dark:text-gray-400 lg:dark:hover:text-white hover:text-primary-700" aria-current="page">Home</a></li>
+                        <li><a href="#layanan" class="block py-2 pl-3 pr-4 text-gray-700 rounded lg:p-0 dark:text-gray-400 lg:dark:hover:text-white hover:text-primary-700">Layanan</a></li>
+                        <li><a href="#artikel" class="block py-2 pl-3 pr-4 text-gray-700 rounded lg:p-0 dark:text-gray-400 lg:dark:hover:text-white hover:text-primary-700">Artikel</a></li>
+                        <li><a href="#galeri" class="block py-2 pl-3 pr-4 text-gray-700 rounded lg:p-0 dark:text-gray-400 lg:dark:hover:text-white hover:text-primary-700">Galeri</a></li>
+                        <li><a href="#team" class="block py-2 pl-3 pr-4 text-gray-700 rounded lg:p-0 dark:text-gray-400 lg:dark:hover:text-white hover:text-primary-700">Tim Kami</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Start block -->
-    <section class="bg-white dark:bg-gray-900" id="home">
-        <div class="grid max-w-screen-xl px-8 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-32">
-            <div class="mr-auto place-self-center lg:col-span-7">
-                <h1
-                    class="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white">
-                    Layanan Konseling <br>dan Konsultasi.</h1>
-                <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-                    Mymental adalah Platform Penunjang Kesehatan mental di Indonesia dengan mengutamakan memberikan
-                    akses kebutuhan layanan esensial bagi remaja dengan permasalahan mental.</p>
-                <div class="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-                    <a href="{{ route('login') }}"
-                        class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">Login</a>
+    <main>
+        <section class="bg-white dark:bg-gray-900" id="home">
+            <div class="grid max-w-screen-xl px-4 pt-32 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+                <div class="mr-auto place-self-center lg:col-span-7">
+                    <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
+                        Temukan Ketenangan, Jaga Kesehatan Mental Anda.</h1>
+                    <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+                        Mymental hadir untuk mendukung perjalanan kesehatan mental remaja di Indonesia dengan layanan esensial yang mudah diakses.</p>
+                    <div class="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+                        <a href="#layanan" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 transition-colors">
+                            Lihat Layanan Kami
+                        </a>
+                        <a href="#artikel" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 transition-colors">
+                            Baca Artikel
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+                    <img src="{{ 'img/photo/heroimage.png' }}" alt="Ilustrasi Kesehatan Mental">
                 </div>
             </div>
-            <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
-                <img src="{{ 'img/photo/heroimage.png' }}" alt="hero image">
-            </div>
-        </div>
-    </section>
-    <!-- End block -->
+        </section>
 
-    <!-- Start block -->
-    <section class="bg-gray-50 dark:bg-gray-800" id="layanan">
-        <div class="max-w-screen-xl px-4 py-8 mx-auto space-y-12 lg:space-y-20 lg:py-24 lg:px-6">
-            <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
-                <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Layanan Kami</h2>
-                <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Berikut beberapa layanan yang
-                    kami tawarkan untuk membuat mentalmu lebih sehat</p>
-            </div>
-            <div class="flex flex-col lg:flex-row justify-center items-center gap-10">
-                <div
-                    class="w-[220px] h-[260px] bg-white rounded-xl shadow flex flex-col justify-center items-center text-center gap-6">
-                    <img src="{{ 'img/icons/FileRichtext.png' }}" alt="">
-                    <div class="flex-col justify-center items-center gap-1 flex">
-                        <p class="text-center text-neutral-800 text-base font-medium ">Artikel Kesehatan Mental</p>
-                    </div>
-                    <div
-                        class="px-4 py-2 bg-purple-900 rounded-[100px] border border-purple-900 justify-center items-end gap-2.5 inline-flex">
-                        <p class="text-white text-xs font-bold ">Info</p>
-                    </div>
+        <section class="bg-gray-50 dark:bg-gray-800" id="layanan">
+            <div class="max-w-screen-xl px-4 py-8 mx-auto lg:py-24 lg:px-6">
+                <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-16">
+                    <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Layanan Kami</h2>
+                    <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">Kami menyediakan berbagai dukungan untuk membantu Anda merasa lebih baik dan lebih sehat secara mental.</p>
                 </div>
-                <div
-                    class="w-[220px] h-[260px] bg-white rounded-xl shadow flex flex-col justify-center items-center text-center gap-6">
-                    <img src="{{ 'img/icons/chat-square-quote.png' }}" alt="">
-                    <div class="flex-col justify-center items-center gap-1 flex">
-                        <p class="text-center text-neutral-800 text-base font-medium ">Konsultasi Mental</p>
+                <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                    <div class="p-6 text-center bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 transform hover:scale-105 transition-transform duration-300">
+                        <img src="{{ 'img/icons/FileRichtext.png' }}" alt="Ikon Artikel" class="w-12 h-12 mx-auto mb-4 text-primary-600">
+                        <h3 class="mb-2 text-xl font-bold dark:text-white">Artikel Kesehatan</h3>
+                        <p class="font-light text-gray-500 dark:text-gray-400">Baca wawasan dan tips terbaru seputar kesehatan mental.</p>
                     </div>
-                    <div
-                        class="px-4 py-2 bg-purple-900 rounded-[100px] border border-purple-900 justify-center items-end gap-2.5 inline-flex">
-                        <p class="text-white text-xs font-bold ">Info</p>
+                    <div class="p-6 text-center bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 transform hover:scale-105 transition-transform duration-300">
+                        <img src="{{ 'img/icons/chat-square-quote.png' }}" alt="Ikon Konsultasi" class="w-12 h-12 mx-auto mb-4 text-primary-600">
+                        <h3 class="mb-2 text-xl font-bold dark:text-white">Konsultasi Mental</h3>
+                        <p class="font-light text-gray-500 dark:text-gray-400">Bicara dengan psikolog profesional kami secara privat.</p>
                     </div>
-                </div>
-                <div
-                    class="w-[220px] h-[260px] bg-white rounded-xl shadow flex flex-col justify-center items-center text-center gap-6">
-                    <img src="{{ 'img/icons/PlayCircle.png' }}" alt="">
-                    <div class="flex-col justify-center items-center gap-1 flex">
-                        <p class="text-center text-neutral-800 text-base font-medium ">Video Edukasi Kesehatan Mental
-                        </p>
+                    <div class="p-6 text-center bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 transform hover:scale-105 transition-transform duration-300">
+                        <img src="{{ 'img/icons/PlayCircle.png' }}" alt="Ikon Video" class="w-12 h-12 mx-auto mb-4 text-primary-600">
+                        <h3 class="mb-2 text-xl font-bold dark:text-white">Video Edukasi</h3>
+                        <p class="font-light text-gray-500 dark:text-gray-400">Tonton video informatif untuk memahami mental Anda.</p>
                     </div>
-                    <div
-                        class="px-4 py-2 bg-purple-900 rounded-[100px] border border-purple-900 justify-center items-end gap-2.5 inline-flex">
-                        <p class="text-white text-xs font-bold ">Info</p>
-                    </div>
-                </div>
-                <div
-                    class="w-[220px] h-[260px] bg-white rounded-xl shadow flex flex-col justify-center items-center text-center gap-6">
-                    <img src="{{ 'img/icons/people.png' }}" alt="">
-                    <div class="flex-col justify-center items-center gap-1 flex">
-                        <p class="text-center text-neutral-800 text-base font-medium ">Pendampingan Mental</p>
-                    </div>
-                    <div
-                        class="px-4 py-2 bg-purple-900 rounded-[100px] border border-purple-900 justify-center items-end gap-2.5 inline-flex">
-                        <p class="text-white text-xs font-bold ">Info</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- End block -->
-    <!-- Start block -->
-    <section class="bg-white dark:bg-gray-900">
-        <div class="max-w-screen-xl px-4 py-8 mx-auto space-y-12 text-center lg:space-y-20 lg:py-24 lg:px-6">
-
-            <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
-                <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Artikel Mymental
-                </h2>
-                <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Beberapa tulisan menarik tentang
-                    kesahatan mental yang perlu Anda tahu</p>
-            </div>
-
-            <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-                <div class="max-w-sm rounded-lg overflow-hidden shadow-lg">
-                    <img class="w-full"
-                        src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        alt="Sunset in the mountains">
-                    <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2 dark:text-white">5 tips menjaga kesehatan mental</div>
-                        <p class="text-gray-700 text-base dark:text-white">
-                            Kesejahteraan tidak hanya tergantung pada kesehatan fisik,...
-                        </p>
-                    </div>
-                </div>
-
-                <div class="max-w-sm rounded-lg overflow-hidden shadow-lg">
-                    <img class="w-full"
-                        src="https://images.unsplash.com/photo-1509475826633-fed577a2c71b?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        alt="Sunset in the mountains">
-                    <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2 dark:text-white">Memahami Perbedaan Antara Psikolog dan Psikiater</div>
-                        <p class="text-gray-700 text-base dark:text-white">Psikolog dan psikiater, dua profesi dalam...
-                        </p>
-                    </div>
-                </div>
-
-                <div class="max-w-sm rounded-lg overflow-hidden shadow-lg">
-                    <img class="w-full"
-                        src="https://images.unsplash.com/photo-1454942901704-3c44c11b2ad1?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        alt="Sunset in the mountains">
-                    <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2 dark:text-white">Santai Kesehatan Mental</div>
-                        <p class="text-gray-700 text-base dark:text-white">
-                            Siapa bilang kesehatan cuma seputar badan? Kesehatan mental...
-                        </p>
-                    </div>
-                </div>
-
-                <div class="max-w-sm rounded-lg overflow-hidden shadow-lg">
-                    <img class="w-full"
-                        src="https://images.unsplash.com/photo-1424878825877-7083ba5de185?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        alt="Sunset in the mountains">
-                    <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2 dark:text-white">Melacak Jejak Sejarah Isu Kesehatan Mental</div>
-                        <p class="text-gray-700 text-base dark:text-white" >
-                            Isu kesehatan mental telah menjalani perjalanan yang panjang...
-                        </p>
+                    <div class="p-6 text-center bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 transform hover:scale-105 transition-transform duration-300">
+                        <img src="{{ 'img/icons/people.png' }}" alt="Ikon Pendampingan" class="w-12 h-12 mx-auto mb-4 text-primary-600">
+                        <h3 class="mb-2 text-xl font-bold dark:text-white">Pendampingan Mental</h3>
+                        <p class="font-light text-gray-500 dark:text-gray-400">Dapatkan dukungan berkelanjutan dari tim kami.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- End block -->
-    <!-- Start block -->
-    <section class="bg-gray-50 dark:bg-gray-800" id="galeri">
-        <div class="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-24 lg:px-6">
-
-            <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
-                <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Galeri Mymental
-                </h2>
-                <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Aktivitas mymental team untuk
-                    menjaga kesehatan mental remaja indonesia</p>
+        <section class="bg-white dark:bg-gray-900" id="artikel">
+            <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+                <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+                    <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Artikel Terbaru</h2>
+                    <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">Beberapa tulisan menarik tentang kesehatan mental yang perlu Anda tahu.</p>
+                </div> 
+                <div class="grid gap-8 lg:grid-cols-2">
+                    <article class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                        <div class="flex justify-between items-center mb-5 text-gray-500">
+                            <span class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
+                                Tips
+                            </span>
+                            <span class="text-sm">5 hari lalu</span>
+                        </div>
+                        <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a href="#">5 Tips Menjaga Kesehatan Mental di Era Digital</a></h2>
+                        <p class="mb-5 font-light text-gray-500 dark:text-gray-400">Kesejahteraan tidak hanya tergantung pada kesehatan fisik, mental pun sama pentingnya. Di tengah kesibukan, berikut cara sederhana merawatnya.</p>
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline">
+                                Baca selengkapnya
+                                <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </a>
+                        </div>
+                    </article> 
+                    <article class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                        <div class="flex justify-between items-center mb-5 text-gray-500">
+                             <span class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
+                                Edukasi
+                            </span>
+                            <span class="text-sm">8 hari lalu</span>
+                        </div>
+                        <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a href="#">Memahami Perbedaan Psikolog dan Psikiater</a></h2>
+                        <p class="mb-5 font-light text-gray-500 dark:text-gray-400">Sering tertukar, padahal keduanya punya peran berbeda dalam membantu masalah kejiwaan. Kenali perbedaannya agar Anda tidak salah pilih.</p>
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline">
+                                Baca selengkapnya
+                                <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </a>
+                        </div>
+                    </article>
+                </div>  
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-1.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-2.jpg" alt="">
-                    </div>
+        </section>
+
+        <section class="bg-gray-50 dark:bg-gray-800" id="galeri">
+            <div class="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-24 lg:px-6">
+                <div class="max-w-screen-md mx-auto mb-8 lg:mb-16">
+                    <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Galeri Mymental</h2>
+                    <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Momen aktivitas tim Mymental dalam menyebarkan kesadaran pentingnya kesehatan mental bagi remaja Indonesia.</p>
                 </div>
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-3.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-4.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-5.jpg" alt="">
-                    </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image.jpg" alt="Galeri Mymental 1"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-1.jpg" alt="Galeri Mymental 2"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-2.jpg" alt="Galeri Mymental 3"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-3.jpg" alt="Galeri Mymental 4"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-4.jpg" alt="Galeri Mymental 5"></div>
+                    <div><img class="h-auto max-w-full rounded-lg shadow-md" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-5.jpg" alt="Galeri Mymental 6"></div>
                 </div>
-                {{-- <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-6.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-7.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-8.jpg" alt="">
-                    </div>
-                </div> --}}
-                {{-- <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-9.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-10.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg"
-                            src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-11.jpg" alt="">
-                    </div>
-                </div> --}}
             </div>
+        </section>
 
-        </div>
-    </section>
-    <!-- End block -->
-    <!-- Start block -->
-    <section class="bg-white dark:bg-gray-900" id="team">
-        <div class="max-w-screen-xl px-4 py-8 mx-auto lg:py-24 lg:px-6">
-            <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
-                <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Mymental teams
-                    like yours</h2>
-                <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Orang-orang keren yang peduli
-                    dengan kesehatan mentalmu.</p>
+        <section class="bg-white dark:bg-gray-900" id="team">
+            <div class="max-w-screen-xl px-4 py-8 mx-auto lg:py-24 lg:px-6">
+                <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-16">
+                    <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Tim Profesional Kami</h2>
+                    <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Orang-orang berdedikasi di balik Mymental yang peduli dengan kesehatan mental Anda.</p>
+                </div>
+                <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+                    <div class="text-center text-gray-500 dark:text-gray-400">
+                        <img class="mx-auto mb-4 w-36 h-36 rounded-full object-cover shadow-lg" src="{{ 'img/photo/owner/div.review-author-avatar.png' }}" alt="Danang Pradana Avatar">
+                        <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Danang Pradana</h3>
+                        <p class="font-semibold text-primary-600 dark:text-primary-500">CEO</p>
+                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">5+ tahun pengalaman di social media & digital marketing. COO Quran Review, CMO PT Ruang Halal.</p>
+                    </div>
+                    <div class="text-center text-gray-500 dark:text-gray-400">
+                        <img class="mx-auto mb-4 w-36 h-36 rounded-full object-cover shadow-lg" src="{{ 'img/photo/owner/div.review-author-avatar-1.png' }}" alt="Dr. Haris Alwafi Avatar">
+                        <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Dr. Haris Alwafi</h3>
+                        <p class="font-semibold text-primary-600 dark:text-primary-500">CTO</p>
+                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">5+ tahun pengalaman di app development & medical doctor. Founder Kulinerku.</p>
+                    </div>
+                    <div class="text-center text-gray-500 dark:text-gray-400">
+                        <img class="mx-auto mb-4 w-36 h-36 rounded-full object-cover shadow-lg" src="{{ 'img/photo/owner/div.review-author-avatar-2.png' }}" alt="M. Fayyaz Syauqi Avatar">
+                        <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">M. Fayyaz Syauqi</h3>
+                        <p class="font-semibold text-primary-600 dark:text-primary-500">CMO</p>
+                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">3+ tahun pengalaman sebagai product designer. Mahasiswa Institut Seni Indonesia Yogyakarta.</p>
+                    </div>
+                    <div class="text-center text-gray-500 dark:text-gray-400">
+                        <img class="mx-auto mb-4 w-36 h-36 rounded-full object-cover shadow-lg" src="{{ 'img/photo/owner/ownwr2.png' }}" alt="Yuni Lestari Avatar">
+                        <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Yuni Lestari, M.Psi.</h3>
+                        <p class="font-semibold text-primary-600 dark:text-primary-500">CPO & Psikolog</p>
+                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">4+ tahun pengalaman konsultasi psikologi. Tim Psikolog HIMPSI DIY, Associate Psychologist.</p>
+                    </div>
+                </div>
             </div>
-            <div class="space-y-8 lg:grid lg:grid-cols-4 sm:gap-6 xl:gap-10 lg:space-y-0">
-                <!-- Teams Card -->
-                <div
-                    class="flex flex-col max-w-lg p-6 mx-auto  justify-center items-start text-center text-gray-900 bg-white border border-gray-100 rounded-lg shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
-                    <img src="{{ 'img/photo/owner/div.review-author-avatar.png' }}" alt="danang Pradana"
-                        class="flex w-[120px] mx-auto">
-                    <h4 class="mb-4 text-2xl font-semibold">DANANG PRADANA (CAND) M.B.A</h4>
-                    <div class="flex items-baseline justify-center my-2">
-                        <span class="text-gray-500 dark:text-gray-400">CEO</span>
-                    </div>
-                    <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">5 years experience in Social
-                        media specialist & digital marketing
-                        COO Quran Review 2019
-                        CMO PT Ruang Halal 2020.</p>
+        </section>
 
+        <section class="bg-gray-50 dark:bg-gray-800">
+            <div class="max-w-screen-xl px-4 py-8 mx-auto lg:py-16 lg:px-6">
+                <div class="max-w-screen-sm mx-auto text-center">
+                    <h2 class="mb-4 text-3xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white">Siap Merasa Lebih Baik?</h2>
+                    <p class="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">Jangan ragu untuk mengambil langkah pertama. Tim kami siap membantu Anda. Hubungi kami sekarang untuk konsultasi.</p>
+                    <a href="https://wa.me/6285179770559" target="_blank" rel="noopener noreferrer" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 transition-colors">
+                        Hubungi Tim Mymental
+                    </a>
                 </div>
-
-                <!-- Teams Card -->
-                <div
-                    class="flex flex-col max-w-lg p-6 mx-auto  justify-center items-start text-center text-gray-900 bg-white border border-gray-100 rounded-lg shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
-                    <img src="{{ 'img/photo/owner/div.review-author-avatar-1.png' }}" alt="danang Pradana"
-                        class="flex w-[120px] mx-auto">
-                    <h4 class="mb-4 text-2xl font-semibold">DR. HARIS ALWAFI M.B.A</h4>
-                    <div class="flex items-baseline justify-center my-2">
-                        <span class="text-gray-500 dark:text-gray-400">CTO</span>
-                    </div>
-                    <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">5 years experience in app
-                        development & Medical doctor
-                        Founder Kulinerku 2020</p>
-                </div>
-
-                <!-- Teams Card -->
-                <div
-                    class="flex flex-col max-w-lg p-6 mx-auto  justify-center text-center text-gray-900 bg-white border border-gray-100 rounded-lg shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
-                    <img src="{{ 'img/photo/owner/div.review-author-avatar-2.png' }}" alt="danang Pradana"
-                        class="flex w-[120px] mx-auto">
-                    <h4 class="mb-4 text-2xl font-semibold">M. FAYYAZ SYAUQI</h4>
-                    <div class="flex items-baseline justify-center my-2">
-                        <span class="text-gray-500 dark:text-gray-400">CMO</span>
-                    </div>
-                    <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">3 years experience as
-                        Product  designer Student at Indonesia art Institute  Yogyakarta</p>
-                </div>
-
-                <!-- Teams Card -->
-                <div
-                    class="flex flex-col max-w-lg p-6 mx-auto  justify-center text-center text-gray-900 bg-white border border-gray-100 rounded-lg shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white">
-                    <img src="{{ 'img/photo/owner/ownwr2.png' }}" alt="danang Pradana"
-                        class="flex w-[120px] mx-auto">
-                    <h4 class="mb-4 text-2xl font-semibold">YUNI LESTARI, M.PSI.,PSIKOLOG</h4>
-                    <div class="flex items-baseline justify-center my-2">
-                        <span class="text-gray-500 dark:text-gray-400">CPO</span>
-                    </div>
-                    <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">4 years experience in psychology
-                        consultation
-                        Tim Psikolog HIMPSI DIY
-                        Associate Psychologist.</p>
-                </div>
-
             </div>
-        </div>
-    </section>
-    <!-- End block -->
-    <!-- Start block -->
-    <section class="bg-gray-50 dark:bg-gray-800">
-        <div class="max-w-screen-xl px-4 py-8 mx-auto lg:py-16 lg:px-6">
-            <div class="max-w-screen-sm mx-auto text-center">
-                <h2 class="mb-4 text-3xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white">
-                    Start your free trial today</h2>
-                <p class="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">Try Landwind Platform for 30
-                    days. No credit card required.</p>
-                <a href="#"
-                    class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">Contact Mymental team</a>
-            </div>
-        </div>
-    </section>
-    <!-- End block -->
+        </section>
+    </main>
+
     <footer class="bg-white dark:bg-gray-800" id="contact">
         <div class="max-w-screen-xl p-4 py-6 mx-auto lg:py-16 md:p-8 lg:p-10">
-            <div class="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5">
+            <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
                 <div>
-                    <h3 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Company</h3>
+                    <h3 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Mymental</h3>
                     <ul class="text-gray-500 dark:text-gray-400">
-                        <li class="mb-4">
-                            <a href="#" class=" hover:underline">About</a>
-                        </li>
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Careers</a>
-                        </li>
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Brand Center</a>
-                        </li>
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Blog</a>
-                        </li>
+                        <li class="mb-4"><a href="#team" class="hover:underline">Tentang Kami</a></li>
+                        <li class="mb-4"><a href="#layanan" class="hover:underline">Layanan</a></li>
+                        <li class="mb-4"><a href="#artikel" class="hover:underline">Blog</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Help center</h3>
+                    <h3 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Dukungan</h3>
                     <ul class="text-gray-500 dark:text-gray-400">
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Discord Server</a>
-                        </li>
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Twitter</a>
-                        </li>
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Facebook
-                        </li>
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Contact Us</a>
-                        </li>
+                        <li class="mb-4"><a href="#" class="hover:underline">Pusat Bantuan</a></li>
+                        <li class="mb-4"><a href="https://wa.me/6285179770559" target="_blank" class="hover:underline">Hubungi Kami</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h3>
                     <ul class="text-gray-500 dark:text-gray-400">
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Privacy Policy</a>
-                        </li>
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Licensing</a>
-                        </li>
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Terms</a>
-                        </li>
+                        <li class="mb-4"><a href="#" class="hover:underline">Kebijakan Privasi</a></li>
+                        <li class="mb-4"><a href="#" class="hover:underline">Syarat & Ketentuan</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Company</h3>
-                    <ul class="text-gray-500 dark:text-gray-400">
-                        <li class="mb-4">
-                            <a href="#" class=" hover:underline">About</a>
-                        </li>
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Careers</a>
-                        </li>
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Brand Center</a>
-                        </li>
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">Blog</a>
-                        </li>
+                    <h3 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Ikuti Kami</h3>
+                     <ul class="text-gray-500 dark:text-gray-400">
+                        <li class="mb-4"><a href="#" class="hover:underline">Instagram</a></li>
+                        <li class="mb-4"><a href="#" class="hover:underline">Twitter</a></li>
+                        <li class="mb-4"><a href="#" class="hover:underline">Facebook</a></li>
                     </ul>
                 </div>
-
             </div>
             <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8">
             <div class="text-center">
-
-                <span class="block text-sm text-center text-gray-500 dark:text-gray-400">© 2021-2022 Landwind™. All
-                    Rights Reserved. Built with <a href="https://flowbite.com"
-                        class="text-purple-600 hover:underline dark:text-purple-500">Flowbite</a> and <a
-                        href="https://tailwindcss.com"
-                        class="text-purple-600 hover:underline dark:text-purple-500">Tailwind CSS</a>. Distributed by
-                    <a href="https://themewagon.com/"
-                        class="text-purple-600 hover:underline dark:text-purple-500">ThemeWagon</a>
-                </span>
-                <ul class="flex justify-center mt-5 space-x-5">
-                    <li>
-                        <a href="#"
-                            class="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path
-                                    d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    </li>
-                </ul>
+                <a href="#" class="flex items-center justify-center mb-5 text-2xl font-semibold text-gray-900 dark:text-white">
+                     {{-- <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" class="h-8 mr-3" alt="Mymental Logo" /> --}}
+                     <x-application-logo class="block h-24 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                    {{-- Mymental --}}
+                </a>
+                <span class="block text-sm text-center text-gray-500 dark:text-gray-400">© 2024-2025 <a href="#" class="hover:underline">Mymental™</a>. All Rights Reserved.</span>
             </div>
         </div>
     </footer>
-    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+    
+    <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
 </body>
 
 </html>

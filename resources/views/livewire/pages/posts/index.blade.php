@@ -1,137 +1,127 @@
 <?php
 
 use App\Models\Post;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
+use Illuminate\Support\Facades\Storage;
 
-new #[Layout('layouts.guest')] class extends Component 
-{
-    /**
-     * Handle an incoming registration request.
-     */
-    public function editPost($id)
+new #[Layout('layouts.app')] class extends Component {
+    public $posts;
+
+    public function mount(): void
     {
-        $post = Post::find($id);
-        return view('posts.edit', compact('post'));
+        $this->posts = Post::with('user')->latest()->get();
     }
 
-    public function deletePost($id)
+    // Method untuk menghapus post
+    public function deletePost(int $id): void
     {
-        $post = Post::find($id);
-        if ($post) {
-            $post->delete();
-            session()->flash('status', 'Artikel berhasil dihapus.');
-            $this->artikels = Post::all(); // Refresh data setelah penghapusan
+        $post = Post::findOrFail($id);
+
+        if ($post->image) {
+            Storage::disk('public')->delete($post->image);
         }
+
+        $post->delete();
+
+        // Kirim pesan sukses dan refresh daftar post
+        session()->flash('status', 'Artikel berhasil dihapus.');
+        $this->posts = Post::with('user')->latest()->get();
     }
 }; ?>
 
-<x-app-layout>
-    @if (session('status'))
-        <div id="alert-2"
-            class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-            role="alert">
-            <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                viewBox="0 0 20 20">
-                <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-            </svg>
-            <span class="sr-only">Info</span>
-            <div class="ms-3 text-sm font-medium">
-                {{ session('status') }}
-            </div>
-            <button type="button"
-                class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
-                data-dismiss-target="#alert-2" aria-label="Close">
-                <span class="sr-only">Close</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                </svg>
-            </button>
-        </div>
-    @endif
-    <x-slot name="header">
-        <div class="flex">
-            <!-- Logo -->
-            <div class="shrink-0 flex items-center">
-                <a href="{{ route('dashboard') }}" wire:navigate>
-                    <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                </a>
-            </div>
+<x-slot name="header">
+    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        {{ __('Manajemen Artikel') }}
+    </h2>
+</x-slot>
 
-            <!-- Navigation Links -->
-            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('posts-index')" :active="request()->routeIs('posts-index')" wire:navigate>
-                    {{ __('Artikel') }}
-                </x-nav-link>
+<div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        {{-- Komponen Notifikasi Flash Message --}}
+        @if (session('status'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition:leave.duration.500ms
+                class="mb-8 bg-green-50 border border-green-200 text-sm text-green-800 rounded-lg p-4 dark:bg-green-800/20 dark:text-green-500 dark:border-green-500/30"
+                role="alert">
+                <span class="font-bold">Sukses!</span> {{ session('status') }}
             </div>
-        </div>
-    </x-slot>
+        @endif
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="w-full">
-                    <div class="max-w-full flex justify-between items-center mt-4 mb-8">
-                        <h4 class=" text-lg font-semibold">Daftar Artikel </h4>
-                        <a href="{{ route('posts-create') }}"
-                            class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
-                            Tambah Artikel</a>
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 text-gray-900 dark:text-gray-100">
+
+                {{-- Header Konten: Judul dan Tombol Tambah --}}
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Daftar Artikel</h3>
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Kelola semua artikel yang ada di
+                            platform.</p>
                     </div>
-                    <div class="relative overflow-x-auto">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        Gambar
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Judul Artikel
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Konten
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Tindakan
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($artikels as $artikel)
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img src="{{ $artikel->image }}" alt="" width="200px">
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            {{ $artikel->title }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ \Illuminate\Support\Str::limit($artikel->content, 100, '...') }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex space-x-4">
-                                                <a x-on:click.prevent="editPost({{ $artikel->id }})" href="{{ route('post-edit', $artikel) }}"
-                                                    class="text-blue-500 px-2 py-2 m-2 hover:underline">Edit</a>
-                                                    <a x-on:click.prevent="deletePost({{ $artikel->id }})" href="#"
-                                                        class="text-red-500 px-2 py-2 m-2 hover:underline">Hapus</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                    <x-primary-button href="{{ route('posts-create') }}" wire:navigate
+                        class="w-full md:w-auto justify-center mt-4">
+                        Tulis Artikel Baru
+                    </x-primary-button>
+
+                </div>
+
+                {{-- Daftar Artikel --}}
+                <div class="space-y-4">
+                    @forelse ($posts as $post)
+                        <div
+                            class="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg border border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+
+                            <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar {{ $post->title }}"
+                                class="w-full sm:w-32 h-32 sm:h-20 object-cover rounded-md flex-shrink-0">
+
+                            <div class="flex-grow">
+                                <a href="{{ route('posts-edit', $post) }}" wire:navigate
+                                    class="font-bold text-lg text-gray-900 dark:text-white hover:text-indigo-500 dark:hover:text-indigo-400 transition">{{ $post->title }}</a>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                    Oleh {{ $post->user->name }} &bull; Dibuat pada
+                                    {{ $post->created_at->translatedFormat('d F Y') }}
+                                </p>
+                            </div>
+
+                            <div class="flex items-center gap-2 self-start sm:self-center mt-4 sm:mt-0 flex-shrink-0">
+                                <a href="{{ route('posts-edit', $post) }}" wire:navigate
+                                    class="p-2 text-gray-500 bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 rounded-md transition">
+                                    <span class="sr-only">Edit</span>
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M16.7574 2.99666L14.7574 4.99666L18.9991 9.23842L21.0001 7.23842C21.3906 6.84789 21.3906 6.21473 21.0001 5.82421L18.1729 2.99698C17.7824 2.60645 17.1492 2.60645 16.7587 2.99698L16.7574 2.99666ZM2.99902 16.7585L13.2418 6.51576L17.4835 10.7575L7.24075 21.0002H2.99902V16.7585Z">
+                                        </path>
+                                    </svg>
+                                </a>
+                                <button wire:click="deletePost({{ $post->id }})"
+                                    wire:confirm="Anda yakin ingin menghapus artikel ini?"
+                                    class="p-2 text-red-500 bg-red-100 hover:bg-red-200 dark:bg-red-900/50 dark:text-red-400 dark:hover:bg-red-900 rounded-md transition">
+                                    <span class="sr-only">Hapus</span>
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M7 6V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7ZM9 4V6H15V4H9Z">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-center py-12 px-6 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+
+                            <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                            </svg>
+
+                            <h4 class="mt-4 font-semibold text-lg text-gray-700 dark:text-gray-200">Belum Ada Artikel
+                            </h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Silakan buat artikel baru untuk
+                                memulai.</p>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>

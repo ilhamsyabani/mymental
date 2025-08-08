@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('photo')->nullable();
             $table->string('spesialis');
-            $table->string('deskripsi');
-            $table->string('pendidikan');
-            $table->integer('pengalaman');
-            $table->integer('SIPP');
+            $table->text('deskripsi');
+            $table->text('pendidikan');
+            $table->decimal('harga', 10, 2);
+            $table->unsignedTinyInteger('pengalaman');
+            $table->string('SIPP')->unique();
             $table->timestamps();
         });
     }

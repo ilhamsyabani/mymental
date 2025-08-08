@@ -17,9 +17,7 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
     /**
      * Show the form for creating a new resource.
@@ -32,14 +30,14 @@ class OrderController extends Controller
     public function checkout(Request $request)
     {
         $this->validate($request, [
-            'date_book' => 'required|date',
-            'time_book' => 'required',
+            'appointment_at' => 'required|date',
+            'appointment_time' => 'required',
         ]);
         $request->request->add([
             'status' => 'Unpaid',
             'user_id' => Auth::user()->id,
-            'name' => Auth::user()->name,
-            'email' => Auth::user()->email,
+            // 'name' => Auth::user()->name,
+            // 'email' => Auth::user()->email,
 
         ]);
 
@@ -56,7 +54,7 @@ class OrderController extends Controller
 
         // Membuat kode unik untuk pesanan dengan format 'MY/[bulan][tanggal][tahun]/[3 kode unik tambahan]'
         $kode = 'MY/' . $bulan . $tanggal . $tahun . '/' . $unik1 . $unik2 . $unik3 . '/' . $order->id;
-        $order->kode = $kode;
+        $order->code = $kode;
         $order->save();
 
         // Set your Merchant Server Key
@@ -74,14 +72,15 @@ class OrderController extends Controller
                 'gross_amount' => $order->price,
             ),
             'customer_details' => array(
-                'first_name' => $order->name,
-                'email' => $order->email,
+                'first_name' => $order->user->name,
+                'email' => $order->user->email,
             ),
         );
 
 
-        $snapToken = \Midtrans\Snap::getSnapToken($params);
-        return view('checkout', compact('snapToken', 'order'));
+        // $snapToken = \Midtrans\Snap::getSnapToken($params);
+        // return view('checkout', compact('snapToken', 'order'));
+        return view('checkout', compact('order'));
     }
 
     public function callback(Request $request)
@@ -167,5 +166,31 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+
+    public function whatsapp(Order $order)
+    {
+        $adminPhoneNumber = '6285179770559';
+
+        $formattedDate = \Carbon\Carbon::parse($order->appointment_at)->translatedFormat('l, d F Y');
+        $formattedTime = \Carbon\Carbon::parse($order->appointment_at)->translatedFormat('H:i \W\I\B');
+
+        $totalPrice = number_format($order->price + 5000, 0, ',', '.');
+
+
+        $message = "Halo Admin, saya ingin melakukan pembayaran untuk pesanan berikut:\n\n" .
+            "Nomor Order: *#" . $order->id . "*\n" .
+            "Pasien: *" . $order->user->name . "*\n" .
+            "Dokter: *" . $order->doctor->name . "*\n" .
+            "Jadwal: *" . $formattedDate . ", " . $formattedTime . "*\n" .
+            "Total Tagihan: *Rp " . $totalPrice . "*\n\n" .
+            "Mohon informasikan metode pembayarannya. Terima kasih.";
+
+        // URL-encode pesan agar aman digunakan di dalam URL
+        $encodedMessage = urlencode($message);
+
+        // Buat URL WhatsApp lengkap
+        return redirect()->away("https://wa.me/{$adminPhoneNumber}?text={$encodedMessage}");
     }
 }

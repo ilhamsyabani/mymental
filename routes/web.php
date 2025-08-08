@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Livewire\Volt\Volt;
 
 use function Livewire\store;
 
@@ -99,67 +100,27 @@ Route::get('/doctor/{id}', function ($id) {
 })->middleware(['auth', 'verified'])
 ->name('doctor.show');
 
-Route::get('/article', function(){
-    $articles = Post::all();
-    return view('list-article', compact(('articles')));
-})->middleware(['auth', 'verified'])
-->name('articles');
+Volt::route('/posts/index', 'pages.posts.index')->name('posts-index');
+Volt::route('/posts/create', 'pages.posts.create')->name('posts-create');
+Volt::route('/posts/{post}/edit', 'pages.posts.edit')->name('posts-edit');
 
-Route::get('/article/{id}', function($id){
-    $article = Post::find($id);
-    return view('detail-article', compact(('article')));
-})->middleware(['auth', 'verified'])
-->name('article.show');
+Volt::route('/articles', 'pages.list-article')->name('articles');
+Volt::route('/articles/{article}', 'pages.detail-article')->name('articles.show');
 
-Route::get('posts', function(){
-    $artikels = Post::all();
-    return view('livewire.pages.posts.index', compact(('artikels')));
-})->middleware(['auth'])->name('posts-index');
+Volt::route('/doctors/index', 'pages.doctor.index')->name('doctors-index');
+Volt::route('/doctors/create', 'pages.doctor.create')->name('doctors-create');
+Volt::route('/doctors/{doctor}/edit', 'pages.doctor.edit')->name('doctors-edit');
 
-Route::get('posts/create', function () {
-    $user = Auth::user();
-    return view('livewire.pages.posts.create', compact('user'));
-})->middleware(['auth'])->name('posts-create');
+Volt::route('/doctor', 'pages.list-doctor')->name('doctors');
 
-Route::post('posts/store', [PostController::class, 'store'])->name('post-store');
-Route::get('posts/{post}/edit', [PostController::class, 'edit'])->middleware(['auth'])->name('post-edit');
-Route::put('posts/{post}', [PostController::class, 'update'])->middleware(['auth'])->name('post-update');
-
-Route::get('audio', function(){
-    $audios = Audio::all();
-    return view('livewire.pages.audio.index', compact(('audios')));
-})->middleware(['auth'])->name('adios-index');
-
-Route::get('audio/create', function () {
-    $user = Auth::user();
-    return view('livewire.pages.audio.create', compact('user'));
-})->middleware(['auth'])->name('audio-create');
-
-Route::post('audio/store', [AudioController::class, 'store'])->name('audio-store');
+Volt::route('/audios/index', 'pages.audio.index')->name('audios-index');
+Volt::route('/audios/create', 'pages.audio.create')->name('audios-create');
+Volt::route('/audios/{audio}/edit', 'pages.audio.edit')->name('audios-edit');
 
 
+Volt::route('/orders/index', 'pages.orders.index')->name('orders-index');
+Volt::route('/orders/{order}/edit', 'pages.orders.edit')->name('orders-edit');
 
-Route::get('doctors/index', function(){
-    $doctors = Doctor::all();
-    return view('livewire.pages.doctor.index', compact(('doctors')));
-})->middleware(['auth'])->name('doctors-index');
-
-Route::get('doctors/create', function () {
-    $user = Auth::user();
-    return view('livewire.pages.doctor.create', compact('user'));
-})->middleware(['auth'])->name('doctor-create');
-
-Route::post('doctors/store', [DoctorController::class, 'store'])->name('doctor-store');
-Route::get('doctors/{doctor}/edit', [DoctorController::class, 'edit'])->name('doctor-edit');
-Route::put('doctors/{doctor}', [DoctorController::class, 'update'])->name('doctor-update');
-
-
-Route::get('orders/index', function(){
-    $orders = Order::all();
-    return view('livewire.pages.orders.index', compact(('orders')));
-})->middleware(['auth'])->name('orders-index');
-Route::get('orders/{order}/edit', [OrderController::class, 'edit'])->name('order-edit');
-Route::put('orders/{order}', [OrderController::class, 'update'])->name('order-update');
 
 Route::get('transactions/index', function(){
     $transactions = Order::where('user_id', auth()->id())->get();
@@ -170,3 +131,7 @@ Route::get('transactions/show/{id}', function($id){
     return view('livewire.pages.transaction.show', compact('transaction'));
 })->middleware(['auth'])->name('transaction-show');
 require __DIR__.'/auth.php';
+
+Route::get('/order/{order}/whatsapp', [OrderController::class, 'whatsapp'])
+    ->name('order-whatsapp')
+    ->middleware(['auth']);

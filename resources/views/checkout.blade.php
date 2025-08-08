@@ -1,221 +1,4 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Detail Tagihan') }}
-        </h2>
-    </x-slot>
-
-    <div class="">
-        <!-- component -->
-        <div class="flex flex-col m-auto p-auto w-full h-16 p-8">
-            <div class="text-black font-medium leading-tight ">
-                <h4>Status Pesanan : <span>{{ $order->status }}</span></h4>
-            </div>
-        </div>
-        <div class="flex-col m-auto p-auto mt-4">
-            <div class="w-[360px] h-[0px] border-t border-neutral-200 m-auto"></div>
-        </div>
-
-        <div class="flex flex-col px-8 py-4">
-            <h4 class="w-full text-black font-medium leading-tight pb-4">Detail Pesanan</h4>
-            <div
-                class=" p-2 bg-white rounded-lg border-2 flex-col justify-start items-start gap-2.5 inline-flex">
-                <div class=" justify-end items-end gap-2 inline-flex">
-                    <div class="grow shrink basis-0 justify-start items-start gap-8 flex">
-                        <div class="relative">
-                            <img src="{{ asset($order->doctor->photo) }}" alt="image"
-                                class="w-[80px] object-cover" />
-                        </div>
-                        <div class="flex-col justify-center items-start gap-2 inline-flex">
-                            <div class="text-black text-sm font-medium first-line:leading-none">{{ $order->doctor->name}}
-                            </div>
-                            <div class="flex-col justify-start items-start gap-2 flex">
-                                <div class="justify-start items-center gap-2 inline-flex">
-                                    <div class="h-4 justify-center items-center gap-2 flex">
-                                        <div class="justify-center items-center gap-2 flex">
-                                            <div class="text-neutral-500 text-xs font-normal leading-[14px]">
-                                                {{ $order->doctor->spesialis}} | 
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="w-[24px] h-[20px] bg-gray-200 rounded justify-center items-center flex">
-                                            <div class="justify-center items-center flex">
-                                                <div class="text-center text-black text-xs font-normal ">
-                                                    {{ $order->doctor->pendidikan }}</div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="w-[36px] h-[20px] bg-gray-200 rounded justify-center items-center flex">
-                                            <div class="justify-center items-center gap-0.5 flex">
-                                                <div class="w-3 h-3 relative">
-                                                    <svg width="12" height="12" viewBox="0 0 12 12"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <g clip-path="url(#clip0_76_476)">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                                d="M4.5 8.5L6 7.03C5.805 7.01 5.66 7 5.5 7C4.165 7 1.5 7.67 1.5 9V10H6L4.5 8.5ZM5.5 6C6.605 6 7.5 5.105 7.5 4C7.5 2.895 6.605 2 5.5 2C4.395 2 3.5 2.895 3.5 4C3.5 5.105 4.395 6 5.5 6Z"
-                                                                fill="#0A0A0A" />
-                                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                                d="M7.735 10.25L6 8.5L6.7 7.795L7.735 8.835L10.3 6.25L11 6.955L7.735 10.25Z"
-                                                                fill="#0A0A0A" />
-                                                        </g>
-                                                        <defs>
-                                                            <clipPath id="clip0_76_476">
-                                                                <rect width="12" height="12" fill="white" />
-                                                            </clipPath>
-                                                        </defs>
-                                                    </svg>
-                                                </div>
-                                                <div class="text-center text-black text-xs font-normal">
-                                                    42</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="w-[196px] justify-start items-center gap-1 inline-flex">
-                                    <div class="p-1 bg-gray-200 rounded justify-center items-center gap-2 flex">
-                                        <div class="text-center text-black text-xs font-normal">Anxiety
-                                        </div>
-                                    </div>
-                                    <div class="p-1 bg-gray-200 rounded justify-center items-center gap-2 flex">
-                                        <div class="text-center text-black text-xs font-normal">Stress
-                                        </div>
-                                    </div>
-                                    <div class="p-1 bg-gray-200 rounded justify-center items-center gap-2 flex">
-                                        <div class="text-center text-black text-xs font-normal">Depresi
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="w-[147px] justify-start items-start gap-2 inline-flex">
-                                    <div class="justify-center items-center gap-1 flex">
-                                        <div class="w-3 h-3 relative">
-                                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <g clip-path="url(#clip0_89_716)">
-                                                    <path
-                                                        d="M10 1.5H9.5V0.5H8.5V1.5H3.5V0.5H2.5V1.5H2C1.45 1.5 1 1.95 1 2.5V10.5C1 11.05 1.45 11.5 2 11.5H10C10.55 11.5 11 11.05 11 10.5V2.5C11 1.95 10.55 1.5 10 1.5ZM10 10.5H2V4H10V10.5Z"
-                                                        fill="#757575" />
-                                                    <circle cx="3.5" cy="6" r="0.5" fill="#757575" />
-                                                    <circle cx="3.5" cy="9" r="0.5" fill="#757575" />
-                                                    <circle cx="6" cy="6" r="0.5" fill="#757575" />
-                                                    <circle cx="6" cy="9" r="0.5" fill="#757575" />
-                                                    <circle cx="8.5" cy="6" r="0.5" fill="#757575" />
-                                                    <circle cx="8.5" cy="9" r="0.5" fill="#757575" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_89_716">
-                                                        <rect width="12" height="12" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-
-                                        </div>
-                                        <div class="text-neutral-500 text-[10px] font-normal leading-3">
-                                            {{ $order->date_book }}</div>
-                                    </div>
-                                    <div class="justify-center items-center gap-1 flex">
-                                        <div class="w-3 h-3 relative">
-                                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <g clip-path="url(#clip0_89_729)">
-                                                    <path
-                                                        d="M5.995 1C3.235 1 1 3.24 1 6C1 8.76 3.235 11 5.995 11C8.76 11 11 8.76 11 6C11 3.24 8.76 1 5.995 1ZM6 10C3.79 10 2 8.21 2 6C2 3.79 3.79 2 6 2C8.21 2 10 3.79 10 6C10 8.21 8.21 10 6 10Z"
-                                                        fill="#757575" />
-                                                    <path d="M6.25 3.5H5.5V6.5L8.125 8.075L8.5 7.46L6.25 6.125V3.5Z"
-                                                        fill="#757575" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_89_729">
-                                                        <rect width="12" height="12" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-
-                                        </div>
-                                        <div class="text-neutral-500 text-[10px] font-normal leading-3">
-                                            {{ $order->time_book }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="flex-col m-auto p-auto">
-            <div class="w-[360px] h-[0px] border-t my-auto border-neutral-200 m-auto"></div>
-        </div>
-        <div class="flex flex-col px-8 py-4">
-            <div class="w-full text-black font-medium leading-tight">Detail Pembelian</div>
-            <div class="flex-col justify-start items-start inline-flex">
-                <table class="mt-2">
-                    <tr>
-                        <td>
-                            <p class="text-zinc-600 py-2 text-sm font-normal leading-none">Nama Pelangan :</p>
-                        </td>
-                        <td>
-                            <p class="text-zinc-600 py-2 px-4 text-sm font-normal leading-none">{{ $order->name }}
-                            </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="text-zinc-600 py-2 text-sm font-normal leading-none">Email Pelangan :</p>
-                        </td>
-                        <td>
-                            <p class="text-zinc-600 py-2 px-4 text-sm font-normal leading-none">{{ $order->email }}
-                            </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="text-zinc-600 py-2 text-sm font-normal leading-none">Kategori Masalah :</p>
-                        </td>
-                        <td>
-                            <p class="text-zinc-600 py-2 px-4 text-sm font-normal leading-none">Stress</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="text-zinc-600 py-2 text-sm font-normal leading-none">Biaya Sesi :</p>
-                        </td>
-                        <td>
-                            <p class="text-zinc-600 py-2 px-4  text-sm font-normal leading-none">Rp.
-                                {{ $order->price }}</p>
-                        </td>
-                    </tr>
-                    {{-- <tr>
-                        <td>
-                            <p class="text-zinc-600 py-1 text-xs font-normal leading-none">Biaya layanan :</p>
-                        </td>
-                        <td>
-                            <p class="text-zinc-600 py-1 px-4  text-xs font-normal leading-none">Rp 5.000</p>
-                        </td>
-                    </tr> --}}
-                </table>
-            </div>
-        </div>
-        <div class="flex-col m-auto p-auto">
-            <div class="w-[360px] h-[0px] border-t my-auto border-neutral-200 m-auto"></div>
-        </div>
-        <div class="items-center mt-8 mx-8">
-            <x-primary-button id="pay-button">
-                {{ __('Lanjut ke Pembayaran') }}
-            </x-primary-button>
-        </div>
-
-        <style>
-            .hide-scroll-bar {
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-            }
-
-            .hide-scroll-bar::-webkit-scrollbar {
-                display: none;
-            }
-        </style>
-    </div>
-    <script type="text/javascript">
+{{-- <script type="text/javascript">
         // For example trigger on button clicked, or any time you need
         var payButton = document.getElementById('pay-button');
         payButton.addEventListener('click', function() {
@@ -242,5 +25,123 @@
                 }
             })
         });
-    </script>
+    </script> --}}
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Detail Tagihan') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 text-gray-900 dark:text-gray-100">
+
+                    <div class="text-center mb-8">
+                        <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">Total Pembayaran</h3>
+                        <p class="text-5xl font-bold text-gray-900 dark:text-white mt-2">
+                            Rp {{ number_format($order->price, 0, ',', '.') }}
+                        </p>
+                        <div class="mt-4">
+                            @if (strtolower($order->status) == 'paid' || strtolower($order->status) == 'lunas')
+                                <span
+                                    class="inline-flex items-center px-4 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full dark:bg-green-900/50 dark:text-green-300">
+                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                    Lunas
+                                </span>
+                            @else
+                                <span
+                                    class="inline-flex items-center px-4 py-1 bg-yellow-100 text-yellow-800 text-sm font-medium rounded-full dark:bg-yellow-900/50 dark:text-yellow-300">
+                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                    Menunggu Pembayaran
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <hr class="dark:border-gray-700">
+
+                    <div class="my-8">
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Ringkasan Janji Temu</h4>
+                        <div
+                            class="flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border dark:border-gray-700">
+                            <img src="{{ asset('storage/' . $order->doctor->photo) }}"
+                                alt="Foto {{ $order->doctor->name }}"
+                                class="w-20 h-20 object-cover rounded-full flex-shrink-0">
+                            <div class="flex-grow">
+                                <p class="font-bold text-gray-900 dark:text-white">{{ $order->doctor->name }}</p>
+                                <p class="text-sm text-indigo-500 dark:text-indigo-400">{{ $order->doctor->spesialis }}
+                                </p>
+
+                                <div class="mt-3 text-sm text-gray-600 dark:text-gray-300 space-y-2">
+                                    <div class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c0-.414.336-.75.75-.75h10.5a.75.75 0 010 1.5H5.5a.75.75 0 01-.75-.75z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                        <span>{{ \Carbon\Carbon::parse($order->appointment_at)->translatedFormat('l, d F Y') }}</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                        <span>Pukul
+                                            {{ \Carbon\Carbon::parse($order->appointment_time)->translatedFormat('H:i') }}
+                                            WIB</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h4 class="text-lg font-semibold text-gray-800 dark:text-white">Rincian Pembayaran</h4>
+                        <div class="text-sm text-gray-600 dark:text-gray-300 space-y-2">
+                            <div class="flex justify-between">
+                                <span>Konsultasi Sesi</span>
+                                <span>Rp {{ number_format($order->price, 0, ',', '.') }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Biaya Layanan</span>
+                                <span>Rp 5.000</span>
+                            </div>
+                        </div>
+                        <hr class="pt-2 dark:border-gray-700">
+                        <div class="flex justify-between font-bold text-gray-900 dark:text-white">
+                            <span>Total</span>
+                            <span>Rp {{ number_format($order->price + 5000, 0, ',', '.') }}</span>
+                        </div>
+                    </div>
+
+                    @if (strtolower($order->status) != 'paid' && strtolower($order->status) != 'lunas')
+                        <div class="mt-10">
+                            <x-primary-button href="{{ route('order-whatsapp', ['order' => $order]) }}" target="_blank"
+                                id="pay-button" class="w-full justify-center py-3 text-base">
+                                {{ __('Lanjut ke Pembayaran') }}
+                            </x-primary-button>
+                        </div>
+                    @else
+                        <div class="mt-10 text-center text-sm text-gray-500 dark:text-gray-400">
+                            Terima kasih telah melakukan pembayaran.
+                        </div>
+                    @endif
+
+                </div>
+            </div>
+        </div>
+    </div>
 </x-app-layout>

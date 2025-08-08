@@ -1,151 +1,134 @@
 <?php
 
 use App\Models\Order;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
+use Illuminate\Support\Facades\File; // Pastikan untuk mengimpor File facade
 
-new #[Layout('layouts.guest')] class extends Component 
-{
-    /**
-     * Handle an incoming registration request.
-     */
-    public function editPost($id)
+new #[Layout('layouts.app')] class extends Component {
+    public $orders;
+
+    // Method mount dijalankan saat komponen dimuat
+    public function mount(): void
     {
-        $order = Post::find($id);
-        return view('orders.edit', compact('order'));
+        // Mengambil semua pesanan, diurutkan dari yang terbaru,
+        // beserta data relasi 'user' dan 'doctor' untuk efisiensi
+        $this->orders = Order::with(['user', 'doctor'])
+            ->latest()
+            ->get();
     }
 
-    public function deletePost($id)
+    // Method untuk menghapus pesanan
+    public function deleteOrder(int $id): void
     {
-        $order = Post::find($id);
+        $order = Order::find($id);
         if ($order) {
             $order->delete();
-            session()->flash('status', 'Artikel berhasil dihapus.');
-            $this->artikels = Order::all(); // Refresh data setelah penghapusan
+            session()->flash('status', 'Pesanan berhasil dihapus.');
+
+            // Refresh daftar pesanan setelah penghapusan
+            $this->orders = Order::with(['user', 'doctor'])
+                ->latest()
+                ->get();
         }
     }
 }; ?>
 
-<x-app-layout>
-    @if (session('status'))
-        <div id="alert-2"
-            class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-            role="alert">
-            <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                viewBox="0 0 20 20">
-                <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-            </svg>
-            <span class="sr-only">Info</span>
-            <div class="ms-3 text-sm font-medium">
-                {{ session('status') }}
-            </div>
-            <button type="button"
-                class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
-                data-dismiss-target="#alert-2" aria-label="Close">
-                <span class="sr-only">Close</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                </svg>
-            </button>
-        </div>
-    @endif
-    <x-slot name="header">
-        <div class="flex">
-            <!-- Logo -->
-            <div class="shrink-0 flex items-center">
-                <a href="{{ route('dashboard') }}" wire:navigate>
-                    <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                </a>
-            </div>
+<x-slot name="header">
+    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        {{ __('Manajemen Pesanan') }}
+    </h2>
+</x-slot>
 
-            <!-- Navigation Links -->
-            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('posts-index')" :active="request()->routeIs('orders-index')" wire:navigate>
-                    {{ __('Pesanan') }}
-                </x-nav-link>
+<div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        {{-- Komponen Notifikasi Flash Message --}}
+        @if (session('status'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition:leave.duration.500ms
+                class="mb-8 bg-green-50 border border-green-200 text-sm text-green-800 rounded-lg p-4 dark:bg-green-800/20 dark:text-green-500 dark:border-green-500/30"
+                role="alert">
+                <span class="font-bold">Sukses!</span> {{ session('status') }}
             </div>
-        </div>
-    </x-slot>
+        @endif
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="w-full">
-                    <div class="max-w-full flex justify-between items-center mt-4 mb-8">
-                        <h4 class=" text-lg font-semibold">Daftar Pesanan</h4>
-                    </div>
-                    <div class="relative overflow-x-auto">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        Kode Pesanan
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Nama Pemesan
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Nama Doktor
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Waktu
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Status
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Link zoom
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Tindakan
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($orders as $order)
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                           {{ $order->kode }}
-                                        <td class="px-6 py-4">
-                                            {{ $order->name }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                          {{$order->doctor->name}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{$order->date_book}}, {{$order->time_book}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{$order->status}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{$order->zoom_link}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex space-x-4">
-                                                <a x-on:click.prevent="editPost({{ $order->id }})" href="{{ route('order-edit', $order) }}"
-                                                    class="text-blue-500 px-2 py-2 m-2 hover:underline">Edit</a>
-                                                    <a x-on:click.prevent="deletePost({{ $order->id }})" href="#"
-                                                        class="text-red-500 px-2 py-2 m-2 hover:underline">Hapus</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 text-gray-900 dark:text-gray-100">
+
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Daftar Semua Pesanan</h3>
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Kelola semua transaksi dan jadwal
+                            konsultasi.</p>
                     </div>
                 </div>
+
+                {{-- DESAIN BARU: Daftar Pesanan dengan Layout Kartu --}}
+                <div class="space-y-4">
+                    @forelse ($orders as $order)
+                        <div
+                            class="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg border border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+
+                            <div class="flex-grow">
+                                <div class="flex items-center justify-between">
+                                    <p class="font-bold text-lg text-gray-900 dark:text-white">
+                                        Pesanan #{{ $order->id }} - {{ $order->user->name }}
+                                    </p>
+                                </div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                    Konsultasi dengan <span
+                                        class="font-semibold text-gray-700 dark:text-gray-200">{{ $order->doctor->name }}</span>
+                                </p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                    Jadwal:
+                                    {{ \Carbon\Carbon::parse($order->appointment_at)->translatedFormat('l, d F Y') }} at
+                                    {{ \Carbon\Carbon::parse($order->appointment_time)->translatedFormat('H:i') }} WIB
+                                </p>
+                                @if (strtolower($order->status) == 'paid' || strtolower($order->status) == 'lunas')
+                                    <span
+                                        class="items-center px-2.5 py-0.5 bg-green-100 text-green-800 text-xs font-medium rounded-full dark:bg-green-900/50 dark:text-green-300">
+                                        Lunas
+                                    </span>
+                                @else
+                                    <span
+                                        class="items-center px-2.5 py-0.5 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full dark:bg-yellow-900/50 dark:text-yellow-300">
+                                        Menunggu Pembayaran
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="flex items-center gap-2 self-start sm:self-center mt-4 sm:mt-0 flex-shrink-0">
+                                <a href="{{ route('orders-edit', ['order' => $order]) }}" wire:navigate
+                                    class="p-2 text-gray-500 bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 rounded-md transition">
+                                    <span class="sr-only">Edit</span>
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M16.7574 2.99666L14.7574 4.99666L18.9991 9.23842L21.0001 7.23842C21.3906 6.84789 21.3906 6.21473 21.0001 5.82421L18.1729 2.99698C17.7824 2.60645 17.1492 2.60645 16.7587 2.99698L16.7574 2.99666ZM2.99902 16.7585L13.2418 6.51576L17.4835 10.7575L7.24075 21.0002H2.99902V16.7585Z">
+                                        </path>
+                                    </svg>
+                                </a>
+                                <button wire:click="deleteOrder({{ $order->id }})"
+                                    wire:confirm="Anda yakin ingin menghapus pesanan ini?"
+                                    class="p-2 text-red-500 bg-red-100 hover:bg-red-200 dark:bg-red-900/50 dark:text-red-400 dark:hover:bg-red-900 rounded-md transition">
+                                    <span class="sr-only">Hapus</span>
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        fill="currentColor">
+                                        <path
+                                            d="M7 6V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7ZM9 4V6H15V4H9Z">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-center py-12 px-6 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                            <h4 class="font-semibold text-lg text-gray-700 dark:text-gray-200">Belum Ada Pesanan</h4>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Saat ini tidak ada data pesanan
+                                yang tersedia.</p>
+                        </div>
+                    @endforelse
+                </div>
+
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>

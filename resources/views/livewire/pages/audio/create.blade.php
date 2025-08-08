@@ -1,79 +1,93 @@
 <?php
 
-use App\Models\Post;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Livewire\Attributes\Layout;
+use App\Models\Audio;
 use Livewire\Volt\Component;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Auth;
 
-new #[Layout('layouts.guest')] class extends Component
-{
-    public $title = '';
-    public $cover ='';
-    public $content = '';
-    public $autor ='';
-    /**
-     * Handle an incoming registration request.
-     */
-    public function storepost(): void
+new #[Layout('layouts.app')] class extends Component {
+    use WithFileUploads;
+
+    public string $title = '';
+    public ?int $duration_in_seconds = null;
+    public $cover;
+    public $content;
+
+    public function saveAudio()
     {
-        $dd($this);
+        $validated = $this->validate([
+            'title' => 'required|string|max:255|unique:audio,title',
+            'duration_in_seconds' => 'required|integer|min:1',
+            'cover' => 'required|image|max:2048', // 2MB Max
+            'content' => 'required|mimes:mp3,wav,m4a|max:10240', // 10MB Max for audio
+        ]);
 
+        $validated['cover'] = $this->cover->store('audio_covers', 'public');
+        $validated['content'] = $this->content->store('audio_content', 'public');
+        $validated['author_id'] = Auth::id();
+
+        Audio::create($validated);
+
+        session()->flash('status', 'New audio has been successfully added.');
+        return $this->redirect(route('audios-index'));
     }
-};?>
+}; ?>
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Article') }}
-        </h2>
-    </x-slot>
+<x-slot name="header">
+    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        {{ __('Add New Audio') }}
+    </h2>
+</x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="w-full">
-                    <div class="max-w-full flex justify-between items-center mt-4 mb-8">
-                        <h4 class=" text-lg font-semibold">Daftar Artikel </h4>
-                     
+<div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 sm:p-8 text-gray-900 dark:text-gray-100">
+                <header class="mb-8">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">Audio Form</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Upload and provide details for the new audio content.</p>
+                </header>
+
+                <form wire:submit.prevent="saveAudio" class="mt-6 space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <x-input-label for="title" :value="__('Audio Title')" />
+                            <x-text-input wire:model="title" id="title" type="text" class="mt-1 block w-full" required />
+                            <x-input-error :messages="$errors->get('title')" class="mt-2" />
+                        </div>
+                        <div>
+                            <x-input-label for="duration_in_seconds" :value="__('Duration (in seconds)')" />
+                            <x-text-input wire:model="duration_in_seconds" id="duration_in_seconds" type="number" class="mt-1 block w-full" required />
+                            <x-input-error :messages="$errors->get('duration_in_seconds')" class="mt-2" />
+                        </div>
+                        <div>
+                            <x-input-label for="cover" :value="__('Cover Image')" />
+                            <input wire:model="cover" type="file" id="cover" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mt-1">
+                            @if ($cover)
+                                <img src="{{ $cover->temporaryUrl() }}" class="mt-4 w-32 h-32 object-cover rounded-lg">
+                            @endif
+                            <x-input-error :messages="$errors->get('cover')" class="mt-2" />
+                        </div>
+                        <div>
+                            <x-input-label for="content" :value="__('Audio File (MP3, WAV)')" />
+                            <input wire:model="content" type="file" id="content" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mt-1">
+                            @if ($content)
+                                <audio controls class="mt-4 w-full" src="{{ $content->temporaryUrl() }}"></audio>
+                            @endif
+                            <x-input-error :messages="$errors->get('content')" class="mt-2" />
+                        </div>
                     </div>
-                    <div>
-                        <form action="{{ route('audio-store') }}" method="POST" enctype="multipart/form-data" class="mt-12">
-                            @csrf
-                            <div class="mb-4">
-                                <label for="title" class="block text-gray-700">Judul</label>
-                                <input wire:model="title" id="title" type="text" name="title"
-                                       class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none">
-                                @error('title') <span class="text-red-500">{{ $message }}</span> @enderror
-                            </div>
-        
-                            <div class="mb-4">
-                                <label for="cover" class="block mb-2 text-sm font-medium text-gray-900"> Link Gambar Sampul</label>
-                                <input wire:model="title" id="title" type="text" name="cover"
-                                       class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none">
-                                @error('cover') <span class="text-red-500">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="mb-4">
-                                <label for="autor" class="block mb-2 text-sm font-medium text-gray-900">Pembuat</label>
-                                <input wire:model="title" id="title" type="text" name="autor"
-                                       class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none">
-                                @error('autor') <span class="text-red-500">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="mb-4">
-                                <label for="content" class="block mb-2 text-sm font-medium text-gray-900">Link Content </label>
-                                <input wire:model="title" id="title" type="text" name="content"
-                                       class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none">
-                                @error('content') <span class="text-red-500">{{ $message }}</span> @enderror
-                            </div>
-        
-                            <button type="submit" class="block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6">Kirim</button>
-                        </form>
-                    </div>                    
-                </div>
+
+                    <div class="flex flex-col md:flex-row items-center justify-end gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+                        <a href="{{ route('audios-index') }}" wire:navigate class="w-full md:w-auto justify-center inline-flex items-center p-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150">
+                            Cancel
+                        </a>
+                        <x-primary-button class="w-full md:w-auto justify-center">
+                         Simpan Audio
+                        </x-primary-button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>

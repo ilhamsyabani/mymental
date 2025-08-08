@@ -1,134 +1,176 @@
 <?php
 
-use App\Models\Post;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Livewire\Attributes\Layout;
+use App\Models\Doctor;
+use Illuminate\Support\Facades\DB;
+use function Livewire\Volt\{state, rules, on, mount, computed};
+use Livewire\WithFileUploads;
 use Livewire\Volt\Component;
 
-new #[Layout('layouts.guest')] class extends Component {
-    public $title = '';
-    public $image;
-    public $content = '';
+new #[Layout('layouts.app')] class extends Component {
+    use WithFileUploads;
+     
+    // Properti untuk setiap field di form
+    public string $name = '';
+    public string $spesialis = 'Klinis';
+    public string $pendidikan = '';
+    public string $deskripsi = '';
+    public string $pengalaman = '';
+    public string $SIPP = '';
+    public string $harga = '';
+    public $photo;
+
     /**
-     * Handle an incoming registration request.
+     * Menyimpan data dokter baru ke database.
      */
-    public function storepost(): void
+    public function saveDoctor()
     {
-        $dd($this);
+        // Aturan validasi
+        $validated = $this->validate([
+            'name' => 'required|string|max:255',
+            'spesialis' => 'required|string',
+            'deskripsi' => 'required|string',
+            'pendidikan' => 'required|string',
+            'pengalaman' => 'required|string|max:255',
+            'SIPP' => 'required|string|max:255|unique:doctors,SIPP',
+            'harga' => 'required|numeric|min:0',
+            'photo' => 'required|image|max:2048',
+        ]);
+
+        $validated['photo'] = $this->photo->store('photos', 'public');
+
+        Doctor::create($validated);
+
+        session()->flash('status', 'Data dokter baru berhasil ditambahkan.');
+        return $this->redirect(route('doctors-index'), navigate: true);
     }
 }; ?>
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Article') }}
-        </h2>
-    </x-slot>
+{{-- TAG <x-layouts.app> DIHAPUS DARI SINI --}}
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="w-full">
-                    <div class="max-w-full flex justify-between items-center mt-4 mb-8">
-                        <h4 class=" text-lg font-semibold">Daftar Artikel </h4>
+<x-slot name="header">
+    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        {{ __('Tambah Dokter Baru') }}
+    </h2>
+</x-slot>
 
-                    </div>
-                    <div>
-                        <form action="{{ route('doctor-store') }}" method="POST" enctype="multipart/form-data"
-                            class="mt-12">
-                            @csrf
-                            <div class="mb-4">
-                                <label for="name" class="block text-gray-700">Nama</label>
-                                <input wire:model="name" id="name" type="text" name="name"
-                                    class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none">
-                                @error('name')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
-                            </div>
+<div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 sm:p-8 text-gray-900 dark:text-gray-100">
 
-                            <div class="mb-4">
-                                <label for="photo" class="block mb-2 text-sm font-medium text-gray-900">
-                                    Photo</label>
-                                <input wire:model="photo" id="photo" type="text" name="photo"
-                                class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none">
+                <header class="mb-8">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">Formulir Pendaftaran Dokter</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Isi semua detail di bawah ini untuk
+                        menambahkan dokter baru ke platform.</p>
+                </header>
+
+                <form wire:submit.prevent="saveDoctor" class="mt-6 space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-1">
+                            <h4 class="font-semibold text-gray-700 dark:text-gray-300">Foto Profil Dokter</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Gunakan foto close-up yang jelas.
+                            </p>
+                            <div>
+                                <label for="photo" class="cursor-pointer">
+                                    @if ($photo)
+                                        <img src="{{ $photo->temporaryUrl() }}" alt="Preview Foto"
+                                            class="w-full h-auto object-cover rounded-lg shadow-md border-2 border-dashed border-gray-300 dark:border-gray-600">
+                                    @else
+                                        <div
+                                            class="w-full h-64 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex flex-col items-center justify-center text-center text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                                            <svg class="w-12 h-12 mb-2" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M15 4H5V20H19V8H15V4ZM3 2.9918C3 2.44405 3.44749 2 3.99826 2H16L20.9997 7V20.9928C21 21.5489 20.5551 22 20.0066 22H3.9934C3.44476 22 3 21.5501 3 20.9932V2.9918ZM12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11Z">
+                                                </path>
+                                            </svg>
+                                            <span class="font-semibold">Klik untuk mengunggah</span>
+                                            <span class="text-xs">PNG, JPG, atau WEBP (Maks. 2MB)</span>
+                                        </div>
+                                    @endif
+                                </label>
+                                <input id="photo" wire:model="photo" type="file" class="sr-only">
                                 @error('photo')
-                                    <span class="text-red-500">{{ $message }}</span>
+                                    <span class="text-red-500 text-sm mt-2">{{ $message }}</span>
                                 @enderror
                             </div>
+                        </div>
 
-                            <div class="mb-4">
-                                <label for="cover" class="block mb-2 text-sm font-medium text-gray-900">Cover</label>
-                                <input wire:model="cover" id="cover" type="text" name="cover"
-                                    class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none">
-                                @error('cover')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
+                        <div class="lg:col-span-2 space-y-6">
+                            <div>
+                                <x-input-label for="name" :value="__('Nama Lengkap')" />
+                                <x-text-input wire:model="name" id="name" name="name" type="text"
+                                    class="mt-1 block w-full" required />
+                                <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             </div>
 
-                            <div class="mb-4">
-                                <label for="spesialis"
-                                    class="block mb-2 text-sm font-medium text-gray-900">Spesialis</label>
+                            <div>
+                                <x-input-label for="spesialis" :value="__('Spesialisasi')" />
                                 <select wire:model="spesialis" id="spesialis" name="spesialis"
-                                class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none">
-                                    <option value="Anak">Anak</option>
-                                    <option value="Klinis">Kelinis</option>
-                                    <option value="Pendidikan">Pendidikan</option>
-                                    <option value="Keluarga">Keluarga</option>
-                                    <option value="Lainya">Lainnya</option>
+                                    class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                    <option value="Klinis">Psikolog Klinis</option>
+                                    <option value="Pendidikan">Psikolog Pendidikan</option>
+                                    <option value="Keluarga">Psikolog Keluarga & Pernikahan</option>
+                                    <option value="Anak">Psikolog Anak & Remaja</option>
+                                    <option value="Lainnya">Lainnya</option>
                                 </select>
-                                @error('spesialis')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
+                                <x-input-error :messages="$errors->get('spesialis')" class="mt-2" />
                             </div>
 
-                            <div class="mb-4">
-                                <label for="deskripsi"
-                                    class="block mb-2 text-sm font-medium text-gray-900">Deskripsi</label>
-                                <textarea wire:model="deskripsi" id="deskripsi" name="deskripsi"
-                                    class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"></textarea>
-                                @error('deskripsi')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
+                             <div>
+                                <x-input-label for="pendidikan" :value="__('Pendidikan')" />
+                                <x-text-input wire:model="pendidikan" id="pendidikan" name="pendidikan" type="text"
+                                    class="mt-1 block w-full" required />
+                                <x-input-error :messages="$errors->get('pendidikan')" class="mt-2" />
                             </div>
 
-                            <div class="mb-4">
-                                <label for="pengalaman"
-                                    class="block mb-2 text-sm font-medium text-gray-900">Pengalaman</label>
-                                <input wire:model="pengalaman" id="pengalaman" type="text" name="pengalaman"
-                                    class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none">
-                                @error('pengalaman')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
+                            <div>
+                                <x-input-label for="deskripsi" :value="__('Deskripsi Singkat')" />
+                                <textarea wire:model="deskripsi" id="deskripsi" name="deskripsi" rows="4"
+                                    class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                    placeholder="Contoh: Membantu klien mengatasi kecemasan dan depresi..."></textarea>
+                                <x-input-error :messages="$errors->get('deskripsi')" class="mt-2" />
                             </div>
 
-                            <div class="mb-4">
-                                <label for="SIPP" class="block mb-2 text-sm font-medium text-gray-900">SIPP</label>
-                                <input wire:model="SIPP" id="SIPP" type="text" name="SIPP"
-                                    class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none">
-                                @error('SIPP')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <x-input-label for="pengalaman" :value="__('Pengalaman (Tahun)')" />
+                                    <x-text-input wire:model="pengalaman" id="pengalaman" name="pengalaman"
+                                        type="number" class="mt-1 block w-full" placeholder="Contoh: 5" />
+                                    <x-input-error :messages="$errors->get('pengalaman')" class="mt-2" />
+                                </div>
+                                <div>
+                                    <x-input-label for="SIPP" :value="__('Nomor SIPP')" />
+                                    <x-text-input wire:model="SIPP" id="SIPP" name="SIPP" type="text"
+                                        class="mt-1 block w-full" />
+                                    <x-input-error :messages="$errors->get('SIPP')" class="mt-2" />
+                                </div>
                             </div>
 
-                            <div class="mb-4">
-                                <label for="harga" class="block mb-2 text-sm font-medium text-gray-900">Harga</label>
-                                <input wire:model="harga" id="harga" type="text" name="harga"
-                                    class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none">
-                                @error('harga')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
+                            <div>
+                                <x-input-label for="harga" :value="__('Tarif per Sesi (Rp)')" />
+                                <x-text-input wire:model="harga" id="harga" name="harga" type="number"
+                                    class="mt-1 block w-full" placeholder="Contoh: 150000" />
+                                <x-input-error :messages="$errors->get('harga')" class="mt-2" />
                             </div>
-
-                            <button type="submit"
-                                class="block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6">Kirim</button>
-                        </form>
+                        </div>
                     </div>
-                </div>
+
+                    <div
+                        class="flex flex-col md:flex-row items-center justify-end gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+                        <a href="{{ route('doctors-index') }}" wire:navigate
+                            class="w-full md:w-auto justify-center inline-flex items-center px-4 py-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150">
+                            Batal
+                        </a>
+
+                        <x-primary-button class="w-full md:w-auto justify-center">
+                            {{ __('Simpan Data Dokter') }}
+                        </x-primary-button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>
+
+{{-- TAG </x-layouts.app> DIHAPUS DARI SINI --}}
