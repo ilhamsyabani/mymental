@@ -5,7 +5,7 @@ use Livewire\Volt\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Url;
 
-new #[Layout('layouts.app')] class extends Component {
+new class extends Component {
     use WithPagination;
 
     #[Url(as: 'q', except: '')]
@@ -34,6 +34,7 @@ new #[Layout('layouts.app')] class extends Component {
     }
 }; ?>
 
+<x-app-layout>
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
         {{ __('Temukan Psikolog') }}
@@ -116,3 +117,4 @@ new #[Layout('layouts.app')] class extends Component {
         </div>
     </div>
 </div>
+</x-app-layout>

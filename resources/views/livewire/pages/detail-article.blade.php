@@ -4,16 +4,13 @@ use App\Models\Post;
 use Livewire\Volt\Component;
 
 // Memberi tahu Volt untuk menggunakan layout utama
-new #[Layout('layouts.app')] class extends Component {
-    // Properti ini akan secara otomatis diisi oleh Livewire
-    // berkat Route Model Binding pada file routes/web.php
+new class extends Component {
+   
     public Post $article;
 
     // Method with() digunakan untuk mengirim data tambahan ke view
     public function with(): array
     {
-        // Mengambil 3 artikel terbaru lainnya sebagai rekomendasi,
-        // kecuali artikel yang sedang dibaca saat ini.
         $relatedArticles = Post::with('user')
             ->where('published_at', '<=', now())
             ->where('id', '!=', $this->article->id)
@@ -26,14 +23,14 @@ new #[Layout('layouts.app')] class extends Component {
         ];
     }
 }; ?>
-
+<x-app-layout>
 <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
         {{ __('Artikel') }}
     </h2>
 </x-slot>
 
-<div class="py-12">
+<div class="pt-0 md:py-12 bg-gray-50 dark:bg-gray-900">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             
@@ -50,7 +47,7 @@ new #[Layout('layouts.app')] class extends Component {
                             <span>Oleh {{ $article->user->name }}</span>
                         </div>
                         <span>&bull;</span>
-                        <span>Diterbitkan pada {{\Carbon\Carbon::parse($article->published_at)->translatedFormat('d F Y') }}</span>
+                        <span>Diterbitkan: {{\Carbon\Carbon::parse($article->published_at)->translatedFormat('d F Y') }}</span>
                     </div>
                 </header>
                 
@@ -75,3 +72,4 @@ new #[Layout('layouts.app')] class extends Component {
         </div>
     </div>
 </div>
+</x-app-layout>

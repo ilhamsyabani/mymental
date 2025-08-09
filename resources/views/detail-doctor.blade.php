@@ -5,24 +5,23 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-0 md:py-12 bg-gray-50 dark:bg-gray-900">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-3 lg:gap-8 space-y-8 lg:space-y-0">
-
                 <div class="lg:col-span-2 bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
-                    <div class="p-6 md:p-8">
+                    <div class="p-0 pb-8 md:p-8">
                         <div class="relative">
-                            <img class="w-full h-48 object-cover rounded-lg" src="{{ asset('storage/'. $doctor->photo) }}" alt="Banner {{ $doctor->name }}">
+                            <img class="w-full h-48 object-cover md:rounded-lg" src="{{ asset('storage/'. $doctor->photo) }}" alt="Banner {{ $doctor->name }}">
                             <img class="w-32 h-32 object-cover rounded-full absolute -bottom-16 left-8 border-4 border-white dark:border-gray-800 shadow-lg" src="{{ asset('storage/'. $doctor->photo) }}" alt="Foto {{ $doctor->name }}">
                         </div>
 
-                        <div class="mt-20">
+                        <div class="mt-20 p-4">
                             <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{$doctor->name}}</h1>
                             <p class="text-indigo-500 dark:text-indigo-400 font-semibold">{{$doctor->spesialis}}</p>
                             <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{$doctor->pendidikan}}</p>
                         </div>
 
-                        <div class="mt-4 flex flex-wrap gap-2">
+                        <div class="mt-4 p-4 flex flex-wrap gap-2">
                             <span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-medium px-2.5 py-1 rounded-full">Kecemasan</span>
                             <span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-medium px-2.5 py-1 rounded-full">Stres</span>
                             <span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-medium px-2.5 py-1 rounded-full">Depresi</span>
@@ -30,7 +29,7 @@
 
                         <hr class="my-8 dark:border-gray-700">
 
-                        <div>
+                        <div class="p-4">
                             <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Biografi</h2>
                             <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{$doctor->deskripsi}}</p>
                         </div>

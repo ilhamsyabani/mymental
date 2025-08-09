@@ -24,8 +24,18 @@ use Livewire\Volt\Volt;
 use function Livewire\store;
 
 Route::get('/', function () {
-    return view('landingpage');
+    $posts = Post::with('user')
+            ->where('published_at', '<=', now())
+            ->latest('published_at')
+            ->take(4)
+            ->get();
+
+    return view('landingpage', [
+            'posts' => $posts,
+        ]);
 });
+
+// Volt::route('/', 'pages.landingpage');
 
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
@@ -84,6 +94,8 @@ Route::get('/dashboard', function(){
 })->middleware(['auth', 'verified'])
 ->name('dashboard');
 
+
+
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
@@ -99,6 +111,8 @@ Route::get('/doctor/{id}', function ($id) {
     return view('detail-doctor', compact('doctor'));
 })->middleware(['auth', 'verified'])
 ->name('doctor.show');
+
+
 
 Volt::route('/posts/index', 'pages.posts.index')->name('posts-index');
 Volt::route('/posts/create', 'pages.posts.create')->name('posts-create');

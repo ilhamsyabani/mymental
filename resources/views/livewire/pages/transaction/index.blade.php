@@ -1,17 +1,16 @@
 <x-app-layout>
-    <livewire:layout.navigation />
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Riwayat Transaksi') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="pt-4 px-4 md:py-12 bg-gray-50 dark:bg-gray-900">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             <div class="mb-8 px-4 sm:px-0">
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Daftar Transaksi Anda</h3>
-                <p class="mt-1 text-md text-gray-500 dark:text-gray-400">Berikut adalah semua sesi konsultasi yang pernah
+                <h3 class="text-md md:text-2xl font-bold text-gray-900 dark:text-white">Daftar Transaksi Anda</h3>
+                <p class="mt-1 text-sm md:text-md text-gray-500 dark:text-gray-400">Berikut adalah semua sesi konsultasi yang pernah
                     Anda pesan.</p>
             </div>
 
