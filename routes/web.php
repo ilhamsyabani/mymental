@@ -23,16 +23,26 @@ use Livewire\Volt\Volt;
 
 use function Livewire\store;
 
+// Route::get('/', function () {
+//     $posts = Post::with('user')
+//             ->where('published_at', '<=', now())
+//             ->latest('published_at')
+//             ->take(4)
+//             ->get();
+
+//     return view('landingpage', [
+//             'posts' => $posts,
+//         ]);
+// });
+
 Route::get('/', function () {
     $posts = Post::with('user')
             ->where('published_at', '<=', now())
             ->latest('published_at')
-            ->take(4)
+            ->take(3)
             ->get();
 
-    return view('landingpage', [
-            'posts' => $posts,
-        ]);
+    return view('test', compact('posts'));
 });
 
 // Volt::route('/', 'pages.landingpage');
